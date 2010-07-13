@@ -60,6 +60,12 @@ public:
 	}
 
 
+	~Apertura() {
+		delete apertura;
+		delete architrave;
+	}
+
+
 	void setApertura(token *ap);
 
 	void setArchitrave(token *ar);
