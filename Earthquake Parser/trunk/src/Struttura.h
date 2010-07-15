@@ -111,6 +111,11 @@ public:
 		checkProperties();
 	}
 
+	//to create the object with only linea_piano
+	Interpiano(token *lp) {
+		Interpiano(lp, 0);
+	}
+
 
 	~Interpiano() {
 		delete linea_piano;
@@ -162,6 +167,11 @@ public:
 		parete = p;
 	}
 
+	//to create the object without the interpiano list
+	Piani(token *p) {
+		Piani(null, p);
+	}
+
 	~Piani() {
 		interpiani.~list();
 		delete parete;
@@ -189,6 +199,15 @@ class Struttura {
 private:
 	Piani p;
 	list<Apertura> a;
+
+	/**
+	* this method checks if the condition of the objects "piani" and "aperture"
+	* are respected
+	* Property to check: 
+	*		PIANI <contains, not_intersect> APERTURE
+	* @throws PropertyViolationException if the properties aren't satisfied
+	**/
+	void checkProperties() throw(PropertyViolationException);
 
 public:
 
