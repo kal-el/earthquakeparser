@@ -33,7 +33,7 @@
 
 /**
  ** \file location.hh
- ** Define the example::location class.
+ ** Define the earthquake::location class.
  */
 
 #ifndef BISON_LOCATION_HH
@@ -47,7 +47,7 @@
 /* Line 162 of location.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-namespace example {
+namespace earthquake {
 
 /* Line 162 of location.cc  */
 #line 54 "location.hh"
@@ -163,7 +163,7 @@ namespace example {
 /* Line 271 of location.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-} // example
+} // earthquake
 
 /* Line 271 of location.cc  */
 #line 170 "location.hh"

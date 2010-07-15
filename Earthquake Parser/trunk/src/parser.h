@@ -47,7 +47,7 @@
 /* Line 35 of lalr1.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-namespace example {
+namespace earthquake {
 
 /* Line 35 of lalr1.cc  */
 #line 54 "parser.h"
@@ -57,7 +57,7 @@ namespace example {
 /* Line 35 of lalr1.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-} // example
+} // earthquake
 
 /* Line 35 of lalr1.cc  */
 #line 64 "parser.h"
@@ -105,7 +105,7 @@ do {							\
 /* Line 35 of lalr1.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-namespace example {
+namespace earthquake {
 
 /* Line 35 of lalr1.cc  */
 #line 112 "parser.h"
@@ -123,14 +123,19 @@ namespace example {
 #line 56 "parser.yy"
 
     int  			integerVal;
-    double 			doubleVal;
-    std::string*		stringVal;
-    class CalcNode*		calcnode;
+    //double 			doubleVal;
+    //std::string*		stringVal;
+	token			*element;
+    class Apertura	*apertura;
+	class Interpiano *interpiano;
+	class Piani		*piani;
+	class Struttura *struttura;
+	list<Apertura>	ap;
 
 
 
 /* Line 35 of lalr1.cc  */
-#line 134 "parser.h"
+#line 139 "parser.h"
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -143,10 +148,13 @@ namespace example {
       /* Tokens.  */
    enum yytokentype {
      END = 0,
-     EOL = 258,
-     INTEGER = 259,
-     DOUBLE = 260,
-     STRING = 261
+     PARETE = 258,
+     LINEA_PIANO = 259,
+     CORDOLO = 260,
+     APERTURA = 261,
+     ARCHITRAVE = 262,
+     MASCHIO = 263,
+     EOL = 264
    };
 
     };
@@ -243,7 +251,7 @@ namespace example {
     static const unsigned char yytable_[];
     static const signed char yytable_ninf_;
 
-    static const unsigned char yycheck_[];
+    static const signed char yycheck_[];
 
     /// For a state, its accessing symbol.
     static const unsigned char yystos_[];
@@ -320,10 +328,10 @@ namespace example {
 /* Line 35 of lalr1.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-} // example
+} // earthquake
 
 /* Line 35 of lalr1.cc  */
-#line 327 "parser.h"
+#line 335 "parser.h"
 
 
 

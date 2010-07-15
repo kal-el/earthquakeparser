@@ -41,7 +41,7 @@
 /* Line 1067 of lalr1.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-namespace example {
+namespace earthquake {
 
 /* Line 1067 of lalr1.cc  */
 #line 48 "stack.hh"
@@ -134,7 +134,7 @@ namespace example {
 /* Line 1153 of lalr1.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-} // example
+} // earthquake
 
 /* Line 1153 of lalr1.cc  */
 #line 141 "stack.hh"
