@@ -169,7 +169,8 @@ public:
 
 	//to create the object without the interpiano list
 	Piani(token *p) {
-		Piani(null, p);
+		list<Interpiano> l;
+		Piani(l, p);
 	}
 
 	~Piani() {
