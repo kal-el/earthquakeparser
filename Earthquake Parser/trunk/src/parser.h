@@ -47,7 +47,7 @@
 /* Line 35 of lalr1.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-namespace earthquake {
+namespace example {
 
 /* Line 35 of lalr1.cc  */
 #line 54 "parser.h"
@@ -57,7 +57,7 @@ namespace earthquake {
 /* Line 35 of lalr1.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-} // earthquake
+} // example
 
 /* Line 35 of lalr1.cc  */
 #line 64 "parser.h"
@@ -105,7 +105,7 @@ do {							\
 /* Line 35 of lalr1.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-namespace earthquake {
+namespace example {
 
 /* Line 35 of lalr1.cc  */
 #line 112 "parser.h"
@@ -125,7 +125,7 @@ namespace earthquake {
     int  			integerVal;
     //double 			doubleVal;
     //std::string*		stringVal;
-	token			*element;
+	Struttura::token_			*element;
     class Apertura	*apertura;
 	class Interpiano *interpiano;
 	class Piani		*piani;
@@ -328,7 +328,7 @@ namespace earthquake {
 /* Line 35 of lalr1.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-} // earthquake
+} // example
 
 /* Line 35 of lalr1.cc  */
 #line 335 "parser.h"

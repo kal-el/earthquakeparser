@@ -33,7 +33,7 @@
    version 2.2 of Bison.  */
 
 // Take the name prefix into account.
-#define yylex   earthquakelex
+#define yylex   examplelex
 
 /* First part of user declarations.  */
 
@@ -139,7 +139,7 @@ do {					\
 /* Line 380 of lalr1.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-namespace earthquake {
+namespace example {
 
 /* Line 380 of lalr1.cc  */
 #line 146 "parser.cc"
@@ -246,7 +246,7 @@ namespace earthquake {
 
 /* Line 480 of lalr1.cc  */
 #line 89 "parser.yy"
-	{ delete (yyvaluep->token); };
+	{ delete (yyvaluep->token_ *); };
 
 /* Line 480 of lalr1.cc  */
 #line 253 "parser.cc"
@@ -255,7 +255,7 @@ namespace earthquake {
 
 /* Line 480 of lalr1.cc  */
 #line 89 "parser.yy"
-	{ delete (yyvaluep->token); };
+	{ delete (yyvaluep->token_ *); };
 
 /* Line 480 of lalr1.cc  */
 #line 262 "parser.cc"
@@ -264,7 +264,7 @@ namespace earthquake {
 
 /* Line 480 of lalr1.cc  */
 #line 89 "parser.yy"
-	{ delete (yyvaluep->token); };
+	{ delete (yyvaluep->token_ *); };
 
 /* Line 480 of lalr1.cc  */
 #line 271 "parser.cc"
@@ -273,7 +273,7 @@ namespace earthquake {
 
 /* Line 480 of lalr1.cc  */
 #line 89 "parser.yy"
-	{ delete (yyvaluep->token); };
+	{ delete (yyvaluep->token_ *); };
 
 /* Line 480 of lalr1.cc  */
 #line 280 "parser.cc"
@@ -282,7 +282,7 @@ namespace earthquake {
 
 /* Line 480 of lalr1.cc  */
 #line 89 "parser.yy"
-	{ delete (yyvaluep->token); };
+	{ delete (yyvaluep->token_ *); };
 
 /* Line 480 of lalr1.cc  */
 #line 289 "parser.cc"
@@ -547,7 +547,7 @@ namespace earthquake {
 /* Line 678 of lalr1.cc  */
 #line 135 "parser.yy"
     {
-				(yyval.piani) = new Piani((yysemantic_stack_[(1) - (1)].token));
+				(yyval.piani) = new Piani((yysemantic_stack_[(1) - (1)].token_ *));
 			}
     break;
 
@@ -556,7 +556,7 @@ namespace earthquake {
 /* Line 678 of lalr1.cc  */
 #line 142 "parser.yy"
     {
-					(yyval.Interpiano) = new Interpiano((yysemantic_stack_[(2) - (1)].token), (yysemantic_stack_[(2) - (2)].token));
+					(yyval.Interpiano) = new Interpiano((yysemantic_stack_[(2) - (1)].token_ *), (yysemantic_stack_[(2) - (2)].token_ *));
 				}
     break;
 
@@ -565,7 +565,7 @@ namespace earthquake {
 /* Line 678 of lalr1.cc  */
 #line 146 "parser.yy"
     {
-					(yyval.Interpiano) = new Interpiano((yysemantic_stack_[(1) - (1)].token));
+					(yyval.Interpiano) = new Interpiano((yysemantic_stack_[(1) - (1)].token_ *));
 				}
     break;
 
@@ -595,7 +595,7 @@ namespace earthquake {
 /* Line 678 of lalr1.cc  */
 #line 167 "parser.yy"
     {
-				(yyval.apertura) = new Apertura((yysemantic_stack_[(2) - (1)].token), (yysemantic_stack_[(2) - (2)].token));
+				(yyval.apertura) = new Apertura((yysemantic_stack_[(2) - (1)].token_ *), (yysemantic_stack_[(2) - (2)].token_ *));
 			}
     break;
 
@@ -1013,7 +1013,7 @@ namespace earthquake {
 /* Line 1054 of lalr1.cc  */
 #line 1 "[Bison:b4_percent_define_default]"
 
-} // earthquake
+} // example
 
 /* Line 1054 of lalr1.cc  */
 #line 1020 "parser.cc"

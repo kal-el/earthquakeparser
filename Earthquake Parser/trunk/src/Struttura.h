@@ -14,7 +14,7 @@ typedef struct {
 	int x2;
 	int y1;
 	int y2;
-} token;
+} token_;
 
 
 /**
@@ -33,8 +33,8 @@ class Apertura {
 
 private:
 
-	token *apertura;
-	token *architrave;
+	token_ *apertura;
+	token_ *architrave;
 
 	/**
 	* this method checks if the condition of the objects "apertura" and "architrave"
@@ -48,9 +48,9 @@ private:
 public:
 
 
-	Apertura(token *ap, token *ar) throw(PropertyViolationException, IllegalArgumentException) {
+	Apertura(token_ *ap, token_ *ar) throw(PropertyViolationException, IllegalArgumentException) {
 		
-		if( (!ap || !ar) || ap->type != APERTURA || ar->type != ARCHITRAVE)
+		if( (!ap || !ar) || ap->type != APERTURA_ || ar->type != ARCHITRAVE_)
 			throw new IllegalArgumentException(string("bad arguments"));
 
 		apertura = ap;
@@ -66,13 +66,13 @@ public:
 	}
 
 
-	void setApertura(token *ap);
+	void setApertura(token_ *ap);
 
-	void setArchitrave(token *ar);
+	void setArchitrave(token_ *ar);
 
-	token *getApertura();
+	token_ *getApertura();
 
-	token *getArchitrave();
+	token_ *getArchitrave();
 };
 
 
@@ -85,8 +85,8 @@ class Interpiano {
 
 private:
 
-	token *linea_piano;
-	token *cordolo;
+	token_ *linea_piano;
+	token_ *cordolo;
 
 	/**
 	* this method checks if the condition of the objects "linea_piano" and "cordolo"
@@ -101,8 +101,8 @@ private:
 public:
 
 	//no null-pointer is allowed: in the grammar an "interpiano" must always have those tokens
-	Interpiano(token *lp, token *c) throw(IllegalArgumentException, PropertyViolationException) {
-		if((!c || !lp) || (c->type != CORDOLO || lp->type != LINEA_PIANO))
+	Interpiano(token_ *lp, token_ *c) throw(IllegalArgumentException, PropertyViolationException) {
+		if((!c || !lp) || (c->type != CORDOLO_ || lp->type != LINEA_PIANO_))
 			throw(new IllegalArgumentException(string("wrong token type")));
 
 		linea_piano = lp;
@@ -112,7 +112,7 @@ public:
 	}
 
 	//to create the object with only linea_piano
-	Interpiano(token *lp) {
+	Interpiano(token_ *lp) {
 		Interpiano(lp, 0);
 	}
 
@@ -123,13 +123,13 @@ public:
 	}
 
 
-	token *getLineaPiano();
+	token_ *getLineaPiano();
 
-	token *getCorridoio();
+	token_ *getCorridoio();
 
-	void setLineaPiano(token *lp) throw(IllegalArgumentException);
+	void setLineaPiano(token_ *lp) throw(IllegalArgumentException);
 
-	void setCordolo(token *c) throw(IllegalArgumentException);
+	void setCordolo(token_ *c) throw(IllegalArgumentException);
 
 };
 
@@ -144,7 +144,7 @@ class Piani {
 private:
 	
 	list<Interpiano> interpiani;
-	token *parete;
+	token_ *parete;
 
 	/**
 	* this method checks if the condition of the objects "interpiani" and "parete"
@@ -158,8 +158,8 @@ private:
 
 public:
 
-	Piani(list<Interpiano> i, token *p=0) throw(IllegalArgumentException, PropertyViolationException) : interpiani(i) {
-		if(p && p->type != PARETE)
+	Piani(list<Interpiano> i, token_ *p=0) throw(IllegalArgumentException, PropertyViolationException) : interpiani(i) {
+		if(p && p->type != PARETE_)
 			throw new IllegalArgumentException(string("wrong token type"));
 		
 		checkProperties();
@@ -168,7 +168,7 @@ public:
 	}
 
 	//to create the object without the interpiano list
-	Piani(token *p) {
+	Piani(token_ *p) {
 		list<Interpiano> l;
 		Piani(l, p);
 	}
@@ -178,11 +178,11 @@ public:
 		delete parete;
 	}
 
-	token *getParete();
+	token_ *getParete();
 
 	list<Interpiano> getInterpiani();
 
-	void setParete(token *p) throw(IllegalArgumentException) ;
+	void setParete(token_ *p) throw(IllegalArgumentException) ;
 
 	void setInterpiani(list<Interpiano> i);
 };
@@ -232,12 +232,12 @@ public:
 	/**
 	* returns the list of Maschi calculated using "a" and "p"
 	**/
-	list<token*> calcolaMaschi(); 
+	list<token_*> calcolaMaschi(); 
 
 	/**
 	* throws an exception if one or more Maschi doesn't respect their properties
 	**/
-	void verificaProprietaMaschio(list<token*> l) throw(PropertyViolationException);
+	void verificaProprietaMaschio(list<token_*> l) throw(PropertyViolationException);
 
 };
 
