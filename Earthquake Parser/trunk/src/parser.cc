@@ -47,10 +47,12 @@
 #include <list>
 #include "Struttura.h"
 
+#define ap list<Apertura *>
+
 
 
 /* Line 311 of lalr1.cc  */
-#line 54 "parser.cc"
+#line 56 "parser.cc"
 
 
 #include "parser.h"
@@ -58,7 +60,7 @@
 /* User implementation prologue.  */
 
 /* Line 317 of lalr1.cc  */
-#line 94 "parser.yy"
+#line 96 "parser.yy"
 
 
 #include "driver.h"
@@ -73,7 +75,7 @@
 
 
 /* Line 317 of lalr1.cc  */
-#line 77 "parser.cc"
+#line 79 "parser.cc"
 
 #ifndef YY_
 # if YYENABLE_NLS
@@ -142,7 +144,7 @@ do {					\
 namespace example {
 
 /* Line 380 of lalr1.cc  */
-#line 146 "parser.cc"
+#line 148 "parser.cc"
 #if YYERROR_VERBOSE
 
   /* Return YYSTR after stripping away unnecessary quotes and
@@ -245,74 +247,74 @@ namespace example {
         case 3: /* "PARETE" */
 
 /* Line 480 of lalr1.cc  */
-#line 89 "parser.yy"
+#line 91 "parser.yy"
 	{ delete (yyvaluep->token_ *); };
 
 /* Line 480 of lalr1.cc  */
-#line 253 "parser.cc"
+#line 255 "parser.cc"
 	break;
       case 4: /* "LINEA_PIANO" */
 
 /* Line 480 of lalr1.cc  */
-#line 89 "parser.yy"
+#line 91 "parser.yy"
 	{ delete (yyvaluep->token_ *); };
 
 /* Line 480 of lalr1.cc  */
-#line 262 "parser.cc"
+#line 264 "parser.cc"
 	break;
       case 5: /* "CORDOLO" */
 
 /* Line 480 of lalr1.cc  */
-#line 89 "parser.yy"
+#line 91 "parser.yy"
 	{ delete (yyvaluep->token_ *); };
 
 /* Line 480 of lalr1.cc  */
-#line 271 "parser.cc"
+#line 273 "parser.cc"
 	break;
       case 6: /* "APERTURA" */
 
 /* Line 480 of lalr1.cc  */
-#line 89 "parser.yy"
+#line 91 "parser.yy"
 	{ delete (yyvaluep->token_ *); };
 
 /* Line 480 of lalr1.cc  */
-#line 280 "parser.cc"
+#line 282 "parser.cc"
 	break;
       case 7: /* "ARCHITRAVE" */
 
 /* Line 480 of lalr1.cc  */
-#line 89 "parser.yy"
+#line 91 "parser.yy"
 	{ delete (yyvaluep->token_ *); };
 
 /* Line 480 of lalr1.cc  */
-#line 289 "parser.cc"
+#line 291 "parser.cc"
 	break;
       case 11: /* "struttura" */
 
 /* Line 480 of lalr1.cc  */
-#line 90 "parser.yy"
+#line 92 "parser.yy"
 	{ delete (yyvaluep->struttura); };
 
 /* Line 480 of lalr1.cc  */
-#line 298 "parser.cc"
+#line 300 "parser.cc"
 	break;
       case 12: /* "piani" */
 
 /* Line 480 of lalr1.cc  */
-#line 90 "parser.yy"
+#line 92 "parser.yy"
 	{ delete (yyvaluep->piani); };
 
 /* Line 480 of lalr1.cc  */
-#line 307 "parser.cc"
+#line 309 "parser.cc"
 	break;
       case 15: /* "apertura" */
 
 /* Line 480 of lalr1.cc  */
-#line 90 "parser.yy"
-	{ delete (yyvaluep->apertura); };
+#line 92 "parser.yy"
+	{ delete (yyvaluep->Apertura *); };
 
 /* Line 480 of lalr1.cc  */
-#line 316 "parser.cc"
+#line 318 "parser.cc"
 	break;
 
 	default:
@@ -391,14 +393,14 @@ namespace example {
     /* User initialization code.  */
     
 /* Line 553 of lalr1.cc  */
-#line 41 "parser.yy"
+#line 43 "parser.yy"
 {
     // initialize the initial location object
     yylloc.begin.filename = yylloc.end.filename = &driver.streamname;
 }
 
 /* Line 553 of lalr1.cc  */
-#line 402 "parser.cc"
+#line 404 "parser.cc"
 
     /* Initialize the stacks.  The initial state will be pushed in
        yynewstate, since the latter expects the semantical and the
@@ -517,16 +519,20 @@ namespace example {
 	  case 2:
 
 /* Line 678 of lalr1.cc  */
-#line 113 "parser.yy"
+#line 115 "parser.yy"
     {
 		   //Struttura's contructor checks the <contains, not intersect> property
-	       (yyval.struttura) = new Struttura((yysemantic_stack_[(2) - (1)].piani), (yysemantic_stack_[(2) - (2)].ap));
-		   list<token*> maschi = (yyval.struttura).calcolaMaschi();
+		   Piani *p = (yysemantic_stack_[(2) - (1)].piani);
+		   ap boh = (yysemantic_stack_[(2) - (2)].ap);
+		   
+	       Struttura *s = new Struttura(*p, boh);
+		   list<token_*> maschi = s->calcolaMaschi();
 		   try{
-				verificaProprietaMaschio(maschi);
+				s->verificaProprietaMaschio(maschi);
+				(yyval.struttura) = s;
 		   }
 		   catch(PropertyViolationException *ex) {
-				cout >> "I maschi non rispettano le proprietà\n";
+				cout << "I maschi non rispettano le proprietà\n";
 		   }
 		}
     break;
@@ -534,18 +540,18 @@ namespace example {
   case 3:
 
 /* Line 678 of lalr1.cc  */
-#line 128 "parser.yy"
+#line 134 "parser.yy"
     {
-				list<Interpiano> interpianiList = (yysemantic_stack_[(2) - (1)].piani).getInterpiani();
-				interpianiList.push_back((yysemantic_stack_[(2) - (2)].Piani));
-				(yyval.piani) = new Piani(interpianiList, (yysemantic_stack_[(2) - (1)].piani).getParete());
+				list<Interpiano> interpianiList = (yysemantic_stack_[(2) - (1)].piani)->getInterpiani();
+				interpianiList.push_back((yysemantic_stack_[(2) - (2)].Piani *));
+				(yyval.piani) = new Piani(interpianiList, (yysemantic_stack_[(2) - (1)].piani)->getParete());
 	       }
     break;
 
   case 4:
 
 /* Line 678 of lalr1.cc  */
-#line 135 "parser.yy"
+#line 141 "parser.yy"
     {
 				(yyval.piani) = new Piani((yysemantic_stack_[(1) - (1)].token_ *));
 			}
@@ -554,38 +560,40 @@ namespace example {
   case 5:
 
 /* Line 678 of lalr1.cc  */
-#line 142 "parser.yy"
+#line 148 "parser.yy"
     {
-					(yyval.Interpiano) = new Interpiano((yysemantic_stack_[(2) - (1)].token_ *), (yysemantic_stack_[(2) - (2)].token_ *));
+					(yyval.Interpiano *) = new Interpiano((yysemantic_stack_[(2) - (1)].token_ *), (yysemantic_stack_[(2) - (2)].token_ *));
 				}
     break;
 
   case 6:
 
 /* Line 678 of lalr1.cc  */
-#line 146 "parser.yy"
+#line 152 "parser.yy"
     {
-					(yyval.Interpiano) = new Interpiano((yysemantic_stack_[(1) - (1)].token_ *));
+					(yyval.Interpiano *) = new Interpiano((yysemantic_stack_[(1) - (1)].token_ *));
 				}
     break;
 
   case 7:
 
 /* Line 678 of lalr1.cc  */
-#line 153 "parser.yy"
+#line 159 "parser.yy"
     {
-					(yysemantic_stack_[(2) - (1)].ap).push_back((yysemantic_stack_[(2) - (2)].apertura));
-					(yyval.ap) = (yysemantic_stack_[(2) - (1)].ap);
+					ap l = (yysemantic_stack_[(2) - (1)].ap);
+					l.push_back((yysemantic_stack_[(2) - (2)].Apertura *));
+					//$<ap>1.push_back($2); //con $1.metodo() ci sono problemi
+					(yyval.ap) = l;
 				}
     break;
 
   case 8:
 
 /* Line 678 of lalr1.cc  */
-#line 158 "parser.yy"
+#line 166 "parser.yy"
     {
-					list<Apertura> apertureList;
-					apertureList.push_back((yysemantic_stack_[(1) - (1)].apertura));
+					list<Apertura *> apertureList;
+					apertureList.push_back((yysemantic_stack_[(1) - (1)].Apertura *));
 					(yyval.ap) = apertureList;
 				}
     break;
@@ -593,16 +601,16 @@ namespace example {
   case 9:
 
 /* Line 678 of lalr1.cc  */
-#line 167 "parser.yy"
+#line 175 "parser.yy"
     {
-				(yyval.apertura) = new Apertura((yysemantic_stack_[(2) - (1)].token_ *), (yysemantic_stack_[(2) - (2)].token_ *));
+				(yyval.Apertura *) = new Apertura((yysemantic_stack_[(2) - (1)].token_ *), (yysemantic_stack_[(2) - (2)].token_ *));
 			}
     break;
 
 
 
 /* Line 678 of lalr1.cc  */
-#line 606 "parser.cc"
+#line 614 "parser.cc"
 	default:
           break;
       }
@@ -923,7 +931,7 @@ namespace example {
   const unsigned char
   Parser::yyrline_[] =
   {
-         0,   112,   112,   127,   134,   141,   145,   152,   157,   166
+         0,   114,   114,   133,   140,   147,   151,   158,   165,   174
   };
 
   // Print the state stack on the debug stream.
@@ -1016,11 +1024,11 @@ namespace example {
 } // example
 
 /* Line 1054 of lalr1.cc  */
-#line 1020 "parser.cc"
+#line 1028 "parser.cc"
 
 
 /* Line 1056 of lalr1.cc  */
-#line 174 "parser.yy"
+#line 182 "parser.yy"
  /*** Additional Code ***/
 
 void example::Parser::error(const Parser::location_type& l,

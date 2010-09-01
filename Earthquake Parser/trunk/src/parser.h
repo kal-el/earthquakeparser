@@ -120,17 +120,17 @@ namespace example {
     {
 
 /* Line 35 of lalr1.cc  */
-#line 56 "parser.yy"
+#line 58 "parser.yy"
 
     int  			integerVal;
     //double 			doubleVal;
     //std::string*		stringVal;
-	Struttura::token_			*element;
+	token_			*element;
     class Apertura	*apertura;
 	class Interpiano *interpiano;
 	class Piani		*piani;
 	class Struttura *struttura;
-	list<Apertura>	ap;
+	ap				apList;
 
 
 

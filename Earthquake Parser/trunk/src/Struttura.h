@@ -7,6 +7,7 @@
 
 using namespace std;
 
+namespace example {
 
 typedef struct {
 	short int type;
@@ -241,6 +242,6 @@ public:
 
 };
 
-
+}
 
 #endif
