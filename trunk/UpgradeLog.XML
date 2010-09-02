@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="flex-bison-cpp-example">
+</Property><Property Name="File di soluzione" Value="D:\Pytone\Dropbox\CPP\flex-bison-cpp-example-0.1.4\flex-bison-cpp-example.sln">
+</Property><Property Name="Date" Value="martedì 25 maggio 2010">
+</Property><Property Name="Time" Value="11.37">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="flex-bison-cpp-example.sln" Description="File salvato come D:\Pytone\Dropbox\CPP\flex-bison-cpp-example-0.1.4\flex-bison-cpp-example.sln.old">
+</Event><Event ErrorLevel="0" Project="exprtest" Source="src\exprtest.vcproj" Description="La distribuzione Web nel server IIS locale non è più supportata. Lo strumento di compilazione per la distribuzione Web è stato rimosso dalle impostazioni del progetto.">
+</Event><Event ErrorLevel="1" Project="exprtest" Source="src\exprtest.vcproj" Description="Questa applicazione è stata aggiornata per includere le impostazioni relative alla funzionalità Controllo dell'account utente di Windows Vista. Per impostazione predefinita, se viene eseguita in Windows Vista con la funzionalità Controllo dell'account utente attivata, questa applicazione viene contrassegnata per essere eseguita con gli stessi privilegi del processo che l'ha avviata. Il contrassegno comporta inoltre la disattivazione dell'esecuzione dell'applicazione con la virtualizzazione. È possibile modificare le impostazioni relative alla funzionalità Controllo dell'account utente dalla pagina delle proprietà del progetto.">
+</Event><Event ErrorLevel="0" Project="exprtest" Source="src\exprtest.vcproj" Description="Backup del file di progetto eseguito con il nome 'D:\Pytone\Dropbox\CPP\flex-bison-cpp-example-0.1.4\src\exprtest.vcproj.8.00.old'.">
+</Event><Event ErrorLevel="0" Project="exprtest" Source="src\exprtest.vcproj" Description="Aggiornamento del progetto completato.">
+</Event><Event ErrorLevel="3" Project="exprtest" Source="src\exprtest.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="libexampleparser" Source="src\libexampleparser.vcproj" Description="Questa applicazione è stata aggiornata per includere le impostazioni relative alla funzionalità Controllo dell'account utente di Windows Vista. Per impostazione predefinita, se viene eseguita in Windows Vista con la funzionalità Controllo dell'account utente attivata, questa applicazione viene contrassegnata per essere eseguita con gli stessi privilegi del processo che l'ha avviata. Il contrassegno comporta inoltre la disattivazione dell'esecuzione dell'applicazione con la virtualizzazione. È possibile modificare le impostazioni relative alla funzionalità Controllo dell'account utente dalla pagina delle proprietà del progetto.">
+</Event><Event ErrorLevel="0" Project="libexampleparser" Source="src\libexampleparser.vcproj" Description="Backup del file di progetto eseguito con il nome 'D:\Pytone\Dropbox\CPP\flex-bison-cpp-example-0.1.4\src\libexampleparser.vcproj.8.00.old'.">
+</Event><Event ErrorLevel="0" Project="libexampleparser" Source="src\libexampleparser.vcproj" Description="Aggiornamento del progetto completato.">
+</Event><Event ErrorLevel="3" Project="libexampleparser" Source="src\libexampleparser.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="flex-bison-cpp-example.sln" Description="Soluzione convertita correttamente">
+</Event><Event ErrorLevel="3" Project="" Source="flex-bison-cpp-example.sln" Description="Converted">
+</Event></UpgradeLog>
