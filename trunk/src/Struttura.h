@@ -9,13 +9,13 @@ using namespace std;
 
 namespace example {
 
-typedef struct {
+struct token_{
 	short int type;
 	int x1;
 	int x2;
 	int y1;
 	int y2;
-} token_;
+};
 
 
 /**
@@ -52,7 +52,7 @@ public:
 	Apertura(token_ *ap, token_ *ar) throw(PropertyViolationException, IllegalArgumentException) {
 		
 		if( (!ap || !ar) || ap->type != APERTURA_ || ar->type != ARCHITRAVE_)
-			throw new IllegalArgumentException(new string("bad arguments"));
+			throw new IllegalArgumentException(string("bad arguments"));
 
 		apertura = ap;
 		architrave = ar;

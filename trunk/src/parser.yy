@@ -9,8 +9,6 @@
 #include <list>
 #include "Struttura.h"
 
-#define ap list<Apertura *>
-
 %}
 
 /*** yacc/bison Declarations ***/
@@ -59,12 +57,13 @@
     int  			integerVal;
     //double 			doubleVal;
     //std::string*		stringVal;
-	token_			*element;
+    float a;
+    struct token_	*element;
     class Apertura	*apertura;
 	class Interpiano *interpiano;
 	class Piani		*piani;
 	class Struttura *struttura;
-	ap				apList;
+	std::list<Apertura>	ap;
 }
 
 //Token List
@@ -85,7 +84,7 @@
 %type <piani>	piani
 //%type <interpiano>	interpiano
 //%type <token>	CORDOLO PARETE LINEA_PIANO ARCHITRAVE MASCHIO APERTURA
-%type <Apertura *>	apertura
+%type <apertura>	apertura
 
 
 %destructor { delete $$; } CORDOLO PARETE LINEA_PIANO ARCHITRAVE APERTURA
@@ -114,17 +113,13 @@
 struttura : piani aperture
            {
 		   //Struttura's contructor checks the <contains, not intersect> property
-		   Piani *p = $1;
-		   ap boh = $<ap>2;
-		   
-	       Struttura *s = new Struttura(*p, boh);
-		   list<token_*> maschi = s->calcolaMaschi();
+	       $$ = new Struttura($1, $<ap>2);
+		   list<token*> maschi = $$.calcolaMaschi();
 		   try{
-				s->verificaProprietaMaschio(maschi);
-				$$ = s;
+				verificaProprietaMaschio(maschi);
 		   }
 		   catch(PropertyViolationException *ex) {
-				cout << "I maschi non rispettano le proprietà\n";
+				cout >> "I maschi non rispettano le proprietï¿½\n";
 		   }
 		}
      
@@ -132,9 +127,9 @@ struttura : piani aperture
 		/** piani <contains> interpiani **/
 piani : piani interpiani
            {
-				list<Interpiano> interpianiList = $1->getInterpiani();
-				interpianiList.push_back($<Piani *>2);
-				$$ = new Piani(interpianiList, $1->getParete());
+				list<Interpiano> interpianiList = $1.getInterpiani();
+				interpianiList.push_back($<Piani>2);
+				$$ = new Piani(interpianiList, $1.getParete());
 	       }
 		   
 		| PARETE
@@ -146,25 +141,23 @@ piani : piani interpiani
 			/** LINEA_PIANO <isUnder, Height(0.2,0.4)> CORDOLO **/
 interpiani : LINEA_PIANO CORDOLO
 				{
-					$<Interpiano *>$ = new Interpiano($<token_ *>1, $<token_ *>2);
+					$<Interpiano>$ = new Interpiano($<token_ *>1, $<token_ *>2);
 				}
 			| LINEA_PIANO
 				{
-					$<Interpiano *>$ = new Interpiano($<token_ *>1);
+					$<Interpiano>$ = new Interpiano($<token_ *>1);
 				}
            
 
 			/** aperture <not intersect> apertura **/
 aperture	: aperture apertura
 				{
-					ap l = $<ap>1;
-					l.push_back($2);
-					//$<ap>1.push_back($2); //con $1.metodo() ci sono problemi
-					$<ap>$ = l;
+					$<ap>1.push_back($2);
+					$<ap>$ = $<ap>1;
 				}
 			| apertura
 				{
-					list<Apertura *> apertureList;
+					list<Apertura> apertureList;
 					apertureList.push_back($1);
 					$<ap>$ = apertureList;
 				}

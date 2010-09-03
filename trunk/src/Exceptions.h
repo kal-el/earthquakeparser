@@ -25,7 +25,7 @@ private:
    string m_err;
 public:
 	 
-   IllegalArgumentException(string &err) : m_err(err) {}
+   IllegalArgumentException(string err) : m_err(err) {}
    ~IllegalArgumentException() throw() {}
     const char* what() { return m_err.c_str(); }
 };

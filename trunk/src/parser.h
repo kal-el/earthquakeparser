@@ -1,10 +1,8 @@
-
-/* A Bison parser, made by GNU Bison 2.4.1.  */
+/* A Bison parser, made by GNU Bison 2.4.2.  */
 
 /* Skeleton interface for Bison LALR(1) parsers in C++
    
-      Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 Free Software
-   Foundation, Inc.
+      Copyright (C) 2002-2010 Free Software Foundation, Inc.
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,23 +42,17 @@
 #include "stack.hh"
 
 
-/* Line 35 of lalr1.cc  */
-#line 1 "[Bison:b4_percent_define_default]"
-
 namespace example {
 
-/* Line 35 of lalr1.cc  */
-#line 54 "parser.h"
+/* Line 34 of lalr1.cc  */
+#line 49 "parser.h"
   class position;
   class location;
 
-/* Line 35 of lalr1.cc  */
-#line 1 "[Bison:b4_percent_define_default]"
-
 } // example
 
-/* Line 35 of lalr1.cc  */
-#line 64 "parser.h"
+/* Line 34 of lalr1.cc  */
+#line 56 "parser.h"
 
 #include "location.hh"
 
@@ -102,13 +94,10 @@ do {							\
 #endif
 
 
-/* Line 35 of lalr1.cc  */
-#line 1 "[Bison:b4_percent_define_default]"
-
 namespace example {
 
-/* Line 35 of lalr1.cc  */
-#line 112 "parser.h"
+/* Line 34 of lalr1.cc  */
+#line 101 "parser.h"
 
   /// A Bison parser.
   class Parser
@@ -119,23 +108,24 @@ namespace example {
     union semantic_type
     {
 
-/* Line 35 of lalr1.cc  */
-#line 58 "parser.yy"
+/* Line 34 of lalr1.cc  */
+#line 56 "parser.yy"
 
     int  			integerVal;
     //double 			doubleVal;
     //std::string*		stringVal;
-	token_			*element;
+    float a;
+    struct token_	*element;
     class Apertura	*apertura;
 	class Interpiano *interpiano;
 	class Piani		*piani;
 	class Struttura *struttura;
-	ap				apList;
+	std::list<Apertura>	ap;
 
 
 
-/* Line 35 of lalr1.cc  */
-#line 139 "parser.h"
+/* Line 34 of lalr1.cc  */
+#line 129 "parser.h"
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -325,13 +315,10 @@ namespace example {
     class Driver& driver;
   };
 
-/* Line 35 of lalr1.cc  */
-#line 1 "[Bison:b4_percent_define_default]"
-
 } // example
 
-/* Line 35 of lalr1.cc  */
-#line 335 "parser.h"
+/* Line 34 of lalr1.cc  */
+#line 322 "parser.h"
 
 
 
