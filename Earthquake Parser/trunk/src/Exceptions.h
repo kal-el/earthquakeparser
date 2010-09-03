@@ -14,7 +14,9 @@ public:
 	 
 	 PropertyViolationException(string &err) : m_err(err) {}
 
-    const char* what() { return m_err.c_str(); }
+    	const char* what() { return m_err.c_str(); }
+
+	~PropertyViolationException() throw() {}
 };
 
 
