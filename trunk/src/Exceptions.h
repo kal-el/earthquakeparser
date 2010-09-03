@@ -13,7 +13,7 @@ private:
 public:
 	 
 	 PropertyViolationException(string &err) : m_err(err) {}
-
+	 ~PropertyViolationException() throw() {}
     const char* what() { return m_err.c_str(); }
 
 };

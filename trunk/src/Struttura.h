@@ -52,7 +52,7 @@ public:
 	Apertura(token_ *ap, token_ *ar) throw(PropertyViolationException, IllegalArgumentException) {
 		
 		if( (!ap || !ar) || ap->type != APERTURA_ || ar->type != ARCHITRAVE_)
-			throw new IllegalArgumentException(string("bad arguments"));
+			throw new IllegalArgumentException(new string("bad arguments"));
 
 		apertura = ap;
 		architrave = ar;
@@ -137,7 +137,7 @@ public:
 
 /**
 * Class representing the "piani" non terminal in the grammar
-*	PIANI 		-> PIANI’  <contains> INTERPIANI
+*	PIANI 		-> PIANIï¿½  <contains> INTERPIANI
 *	PIANI 		-> parete
 **/
 class Piani {
@@ -151,7 +151,7 @@ private:
 	* this method checks if the condition of the objects "interpiani" and "parete"
 	* are respected
 	* Property to check: 
-	*		PIANI’  <contains> INTERPIANI
+	*		PIANIï¿½  <contains> INTERPIANI
 	*		parete (if interpiani is empty)
 	* @throws PropertyViolationException if the properties aren't satisfied
 	**/
