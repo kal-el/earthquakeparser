@@ -32,7 +32,7 @@
 
 /**
  ** \file location.hh
- ** Define the example::location class.
+ ** Define the earthquake::location class.
  */
 
 #ifndef BISON_LOCATION_HH
@@ -43,7 +43,7 @@
 # include "position.hh"
 
 
-namespace example {
+namespace earthquake {
 
 /* Line 162 of location.cc  */
 #line 50 "location.hh"
@@ -156,7 +156,7 @@ namespace example {
   }
 
 
-} // example
+} // earthquake
 
 /* Line 271 of location.cc  */
 #line 163 "location.hh"

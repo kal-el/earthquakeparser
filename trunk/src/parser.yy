@@ -30,7 +30,7 @@
 %skeleton "lalr1.cc"
 
 /* namespace to enclose parser in */
-%name-prefix="example"
+%name-prefix="earthquake"
 
 /* set the parser's class identifier */
 %define "parser_class_name" "Parser"
@@ -55,25 +55,25 @@
 
 %union {
     int  			integerVal;
-    //double 			doubleVal;
-    //std::string*		stringVal;
+    double 			doubleVal;
+    std::string*		stringVal;
     float a;
     struct token_	*element;
     class Apertura	*apertura;
 	class Interpiano *interpiano;
 	class Piani		*piani;
 	class Struttura *struttura;
-	std::list<Apertura>	ap;
+	class Aperture	*ap;
 }
 
 //Token List
 //if we need it, we can use %token TOKEN "blabla" to see blabla as a literal token (not yacc compatible)
-%token <token_ *> PARETE  
-%token <token_ *> LINEA_PIANO
-%token <token_ *> CORDOLO
-%token <token_ *> APERTURA
-%token <token_ *> ARCHITRAVE
-%token <token_ *> MASCHIO
+%token <struct token_ *> PARETE  
+%token <struct token_ *> LINEA_PIANO
+%token <struct token_ *> CORDOLO
+%token <struct token_ *> APERTURA
+%token <struct token_ *> ARCHITRAVE
+%token <struct token_ *> MASCHIO
 
 
 %token			END	     0	"end of file"
@@ -87,7 +87,9 @@
 %type <apertura>	apertura
 
 
-%destructor { delete $$; } CORDOLO PARETE LINEA_PIANO ARCHITRAVE APERTURA
+
+//%destructor { delete $$; } CORDOLO //PARETE LINEA_PIANO ARCHITRAVE APERTURA
+
 %destructor { delete $$; } struttura piani apertura //interpiano
 
  /*** END EXAMPLE - Change the example grammar's tokens above ***/
@@ -113,13 +115,13 @@
 struttura : piani aperture
            {
 		   //Struttura's contructor checks the <contains, not intersect> property
-	       $$ = new Struttura($1, $<ap>2);
-		   list<token*> maschi = $$.calcolaMaschi();
+	       $$ = new Struttura(*($1), ($<ap>2)->getList());
+		   list<token_*> maschi = $$->calcolaMaschi();
 		   try{
-				verificaProprietaMaschio(maschi);
+				$$->verificaProprietaMaschio(maschi);
 		   }
 		   catch(PropertyViolationException *ex) {
-				cout >> "I maschi non rispettano le propriet�\n";
+				printf("I maschi non rispettano le proprieta \n");
 		   }
 		}
      
@@ -127,46 +129,46 @@ struttura : piani aperture
 		/** piani <contains> interpiani **/
 piani : piani interpiani
            {
-				list<Interpiano> interpianiList = $1.getInterpiani();
-				interpianiList.push_back($<Piani>2);
-				$$ = new Piani(interpianiList, $1.getParete());
+				list<Interpiano> interpianiList = $<piani>1->getInterpiani();
+				interpianiList.push_back(*($<interpiano>2));
+				$$ = new Piani(interpianiList, $1->getParete());
 	       }
 		   
 		| PARETE
 			{
-				$$ = new Piani($<token_ *>1);
+				$$ = new Piani($<element>1);
 			}
 	   
 
 			/** LINEA_PIANO <isUnder, Height(0.2,0.4)> CORDOLO **/
 interpiani : LINEA_PIANO CORDOLO
 				{
-					$<Interpiano>$ = new Interpiano($<token_ *>1, $<token_ *>2);
+					$<interpiano>$ = new Interpiano($<element>1, $<element>2);
 				}
 			| LINEA_PIANO
 				{
-					$<Interpiano>$ = new Interpiano($<token_ *>1);
+					$<interpiano>$ = new Interpiano($<element>1);
 				}
            
 
 			/** aperture <not intersect> apertura **/
 aperture	: aperture apertura
 				{
-					$<ap>1.push_back($2);
+					($<ap>1)->getList().push_back(*($2));
 					$<ap>$ = $<ap>1;
 				}
 			| apertura
 				{
 					list<Apertura> apertureList;
-					apertureList.push_back($1);
-					$<ap>$ = apertureList;
+					apertureList.push_back(*$1);
+					$<ap>$ = new Aperture(apertureList);
 				}
 
 				
 			/** APERTURA <isAbove, Height(0.1,0.2),isCentered,isLarger(0.15,0.3)> ARCHITRAVE **/
 apertura : APERTURA ARCHITRAVE
 			{
-				$$ = new Apertura($<token_ *>1, $<token_ *>2);
+				$$ = new Apertura($<element>1, $<element>2);
 			}
             
 			

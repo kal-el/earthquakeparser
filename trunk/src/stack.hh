@@ -36,7 +36,7 @@
 #include <deque>
 
 
-namespace example {
+namespace earthquake {
 
 /* Line 1066 of lalr1.cc  */
 #line 43 "stack.hh"
@@ -126,7 +126,7 @@ namespace example {
     unsigned int range_;
   };
 
-} // example
+} // earthquake
 
 /* Line 1152 of lalr1.cc  */
 #line 133 "stack.hh"

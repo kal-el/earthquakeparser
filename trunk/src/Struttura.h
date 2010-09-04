@@ -7,9 +7,9 @@
 
 using namespace std;
 
-namespace example {
+namespace earthquake {
 
-struct token_{
+struct token_ {
 	short int type;
 	int x1;
 	int x2;
@@ -77,6 +77,18 @@ public:
 };
 
 
+class Aperture{
+private:
+	list<Apertura> a;
+public:
+	Aperture(list<Apertura> ap): a(ap){};
+	~Aperture(){ delete &a; };
+	list<Apertura> getList(){
+		return a;
+	}
+
+};
+
 /**
 * Class representing the "Interpiani" grammar non terminal
 *	INTERPIANI 	-> linea_piano <isUnder, Height(0.2,0.4)> CORDOLO
@@ -137,7 +149,7 @@ public:
 
 /**
 * Class representing the "piani" non terminal in the grammar
-*	PIANI 		-> PIANI�  <contains> INTERPIANI
+*	PIANI 		-> PIANI  <contains> INTERPIANI
 *	PIANI 		-> parete
 **/
 class Piani {

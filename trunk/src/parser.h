@@ -42,14 +42,14 @@
 #include "stack.hh"
 
 
-namespace example {
+namespace earthquake {
 
 /* Line 34 of lalr1.cc  */
 #line 49 "parser.h"
   class position;
   class location;
 
-} // example
+} // earthquake
 
 /* Line 34 of lalr1.cc  */
 #line 56 "parser.h"
@@ -94,7 +94,7 @@ do {							\
 #endif
 
 
-namespace example {
+namespace earthquake {
 
 /* Line 34 of lalr1.cc  */
 #line 101 "parser.h"
@@ -112,15 +112,15 @@ namespace example {
 #line 56 "parser.yy"
 
     int  			integerVal;
-    //double 			doubleVal;
-    //std::string*		stringVal;
+    double 			doubleVal;
+    std::string*		stringVal;
     float a;
     struct token_	*element;
     class Apertura	*apertura;
 	class Interpiano *interpiano;
 	class Piani		*piani;
 	class Struttura *struttura;
-	std::list<Apertura>	ap;
+	class Aperture	*ap;
 
 
 
@@ -315,7 +315,7 @@ namespace example {
     class Driver& driver;
   };
 
-} // example
+} // earthquake
 
 /* Line 34 of lalr1.cc  */
 #line 322 "parser.h"

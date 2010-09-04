@@ -1,140 +1,128 @@
-/* $Id: scanner.ll 44 2008-10-23 09:03:19Z tb $ -*- mode: c++ -*- */
-/** \file scanner.ll Define the example Flex lexical scanner */
+/*
+ *  The scanner definition for normeAntisismiche.
+ */
 
-%{ /*** C/C++ Declarations ***/
-
-#include <string>
-
-#include "scanner.h"
-
-/* import the parser's token type into a local typedef */
-//typedef example::Parser::token token;
-//typedef example::Parser::token_type token_type;
-typedef earthquake::Parser::token token;  //PROVE CARMINE
-typedef earthquake::Parser::token_type token_type; //PROVE CARMINE
-
-/* By default yylex returns int, we use token_type. Unfortunately yyterminate
- * by default returns 0, which is not of token_type. */
-#define yyterminate() return token::END
-
-/* This disables inclusion of unistd.h, which is not available under Visual C++
- * on Win32. The C++ scanner uses STL streams instead. */
-#define YY_NO_UNISTD_H
-
-%}
-
-/*** Flex Declarations and Options ***/
-
-/* enable c++ scanner class generation */
-%option c++
-
-/* change the name of the scanner class. results in "ExampleFlexLexer" */
-%option prefix="earthquake"
-
-/* the manual says "somewhat more optimized" */
-%option batch
-
-/* enable scanner to generate debug output. disable this for release
- * versions. */
-%option debug
-
-/* no support for include files is planned */
-%option yywrap nounput 
-
-/* enables the use of start condition stacks */
-%option stack
-
-/* The following paragraph suffices to track locations accurately. Each time
- * yylex is invoked, the begin position is moved onto the end position. */
+/*
+ *  Stuff enclosed in %{ %} in the first section is copied verbatim to the
+ *  output, so headers and global definitions are placed here to be visible
+ * to the code in the file.  Don't remove anything that was here initially
+ */
 %{
-#define YY_USER_ACTION  yylloc->columns(yyleng);
+#include "normeAntisismiche-parse.h"
+#include "stringtab.h"
+#include "utilities.h"
+
+/* The compiler assumes these identifiers. */
+#define yylval normeAntisismiche_yylval
+#define yylex  normeAntisismiche_yylex
+
+/* Max size of string constants */
+#define MAX_STR_CONST 1025
+#define YY_NO_UNPUT   /* keep g++ happy */
+
+extern FILE *fin; /* we read from this file */
+
+/* define YY_INPUT so we read from the FILE fin:
+ * This change makes it possible to use this scanner in
+ * the normeAntisismiche compiler.
+ */
+#undef YY_INPUT
+#define YY_INPUT(buf,result,max_size) \
+	if ( (result = fread( (char*)buf, sizeof(char), max_size, fin)) < 0) \
+		YY_FATAL_ERROR( "read() in flex scanner failed");
+
+char string_buf[MAX_STR_CONST]; /* to assemble string constants */
+char *string_buf_ptr;
+
+extern int curr_lineno;
+extern int verbose_flag;
+
+extern YYSTYPE normeAntisismiche_yylval;
+
+int begin = 1;
+int prevstate;
+
+/* altre eventuali inizializzazioni vanno qui*/ 
+
 %}
 
-%% /*** Regular Expressions Part ***/
-
- /* code to place at the beginning of yylex() */
-%{
-    // reset location
-    yylloc->step();
-%}
-
- /*** BEGIN EXAMPLE - Change the example lexer rules below ***/
-
-[0-9]+ {
-    yylval->integerVal = atoi(yytext);
-    return token::INTEGER;
+%x INTERPIANO APERTURE PARETE LINEAPIANO APERTURA ARCHITRAVE CORDOLO
+num          [0-9]+
+floatingp    {num}"."{num}
+%%
+;
+"struttura$$$" {
+	if(!begin)
+		exit(0);
+	else 
+		begin = 0;
 }
 
-[0-9]+"."[0-9]* {
-    yylval->doubleVal = atof(yytext);
-    return token::DOUBLE;
+"parete$" {
+	prevstate = INITIAL;
+	BEGIN(PARETE);
+	return(parete);
 }
 
-[A-Za-z][A-Za-z0-9_,.-]* {
-    yylval->stringVal = new std::string(yytext, yyleng);
-    return token::STRING;
+<PARETE,LINEAPIANO,APERTURA,ARCHITRAVE,CORDOLO>[0-9]+"."[0-9]+";" {
+	yylval.symbol = floattable.add_string(yytext,yyleng-1);
+	//yytext[yyleng-1]='\0';
+	//printf("%s", yytext);		
+	return(float_const);
 }
 
- /* gobble up white-spaces */
-[ \t\r]+ {
-    yylloc->step();
+<PARETE,LINEAPIANO,APERTURA,ARCHITRAVE,CORDOLO>"$$$" {
+	BEGIN(prevstate);		
 }
 
- /* gobble up end-of-lines */
-\n {
-    yylloc->lines(yyleng); yylloc->step();
-    return token::EOL;
+
+"interpiano$$$" {
+	prevstate = INITIAL;
+	BEGIN(INTERPIANO);
 }
 
- /* pass all other characters up to bison */
-. {
-    return static_cast<token_type>(*yytext);
+<INTERPIANO>"lineapiano$" {
+	prevstate = INTERPIANO;
+	BEGIN(LINEAPIANO);
+	return(linea_piano);
 }
 
- /*** END EXAMPLE - Change the example lexer rules above ***/
-
-%% /*** Additional Code ***/
-
-namespace example {
-
-Scanner::Scanner(std::istream* in,
-		 std::ostream* out)
-    : ExampleFlexLexer(in, out)
-{
+<INTERPIANO>"cordolo$" {
+	prevstate = INTERPIANO;
+	BEGIN(CORDOLO);
+	return(cordolo);	
 }
 
-Scanner::~Scanner()
-{
-}
-
-void Scanner::set_debug(bool b)
-{
-    yy_flex_debug = b;
-}
+<INTERPIANO>"&ip&" {
+	BEGIN(INITIAL);
 
 }
 
-/* This implementation of ExampleFlexLexer::yylex() is required to fill the
- * vtable of the class ExampleFlexLexer. We define the scanner's main yylex
- * function via YY_DECL to reside in the Scanner class instead. */
-
-#ifdef yylex
-#undef yylex
-#endif
-
-int ExampleFlexLexer::yylex()
-{
-    std::cerr << "in ExampleFlexLexer::yylex() !" << std::endl;
-    return 0;
+"aperture$$$" {
+	BEGIN(APERTURE);
 }
 
-/* When the scanner receives an end-of-file indication from YY_INPUT, it then
- * checks the yywrap() function. If yywrap() returns false (zero), then it is
- * assumed that the function has gone ahead and set up `yyin' to point to
- * another input file, and scanning continues. If it returns true (non-zero),
- * then the scanner terminates, returning 0 to its caller. */
-
-int ExampleFlexLexer::yywrap()
-{
-    return 1;
+<APERTURE>"apertura$" {
+	prevstate = APERTURE;
+	BEGIN(APERTURA);
+	return(apertura);
 }
+
+<APERTURE>"architrave$" {
+	prevstate = APERTURE;
+	BEGIN(ARCHITRAVE);
+	return(architrave);
+}
+
+<APERTURE>"&ap&" {
+	BEGIN(INITIAL);
+}
+
+<INITIAL,PARETE,LINEAPIANO,APERTURA,ARCHITRAVE,CORDOLO>"\n" {
+	curr_lineno++;
+}
+
+
+%%
+
+
