@@ -11,10 +11,10 @@ namespace earthquake {
 
 struct token_ {
 	short int type;
-	int x1;
-	int x2;
-	int y1;
-	int y2;
+	float x1;
+	float x2;
+	float y1;
+	float y2;
 };
 
 
@@ -44,7 +44,52 @@ private:
 	*		apertura <isAbove, Height(0.1,0.2),isCentered,isLarger(0.15,0.3)> architrave
 	* @throws PropertyViolationException if the properties aren't satisfied
 	**/
-	void checkProperties() throw(PropertyViolationException);
+	void checkProperties() throw(PropertyViolationException) {
+		isAbove();
+
+		float height = apertura->y2 - apertura->y1;
+
+		if(height < 0.1 || height > 0.2)
+			throw new PropertyViolationException(string("Apertura's height isn't between 0.1 and 0.2"));
+
+		isCentered();
+		isLarger();
+	}
+
+	/**
+	 * checks if "apertura" is not above "architrave"
+	 * NOTE: on the documentation is written that apertura is above the architrave
+	 * @throws PropertyViolationException if the property isn't satisfied
+	 */
+	void isAbove() throw(PropertyViolationException) {
+		if(architrave->y1 < apertura->y2)
+			throw new PropertyViolationException(string("Architrave isn't above the Apertura"));
+	}
+
+	/**
+	 * checks if "apertura" is centered (respect to "architrave")
+	 * @throws PropertyViolationException if the property isn't satisfied
+	 */
+	void isCentered() throw(PropertyViolationException) {
+		float rightDiff = architrave->x2 - apertura->x2;
+		float leftDiff = apertura->x1 - architrave->x1;
+
+		if(leftDiff != rightDiff)
+			throw new PropertyViolationException(string("Apertura not centered"));
+	}
+
+	/**
+	 * checks if the "architrave" is larger than the "apertura"
+	 * NOTE: on the documentation is written the opposite
+	 * @throws PropertyViolationException if the property isn't satisfied
+	 */
+	void isLarger() throw(PropertyViolationException) {
+		float archLength = architrave->x2 - architrave->x1;
+		float apLength = apertura->x2 - apertura->x1;
+
+		if(archLength < apLength)
+			throw new PropertyViolationException(string("Apertura is larger than Architrave"));
+	}
 
 public:
 
@@ -67,22 +112,39 @@ public:
 	}
 
 
-	void setApertura(token_ *ap);
+	void setApertura(token_ *ap) {
+		apertura = ap;
+	}
 
-	void setArchitrave(token_ *ar);
+	void setArchitrave(token_ *ar) {
+		architrave = ar;
+	}
 
-	token_ *getApertura();
+	token_ *getApertura() {
+		return apertura;
+	}
 
-	token_ *getArchitrave();
+	token_ *getArchitrave() {
+		return architrave;
+	}
 };
 
 
+/**
+* Class representing the "Aperture" non terminal:
+*	APERTURE 	-> APERTURE' <not intersect> APERTURA
+**/
 class Aperture{
+
 private:
 	list<Apertura> a;
+
 public:
+
 	Aperture(list<Apertura> ap): a(ap){};
+
 	~Aperture(){ delete &a; };
+
 	list<Apertura> getList(){
 		return a;
 	}
@@ -109,13 +171,37 @@ private:
 	*		linea_piano (if cordolo is Null)
 	* @throws PropertyViolationException if the properties aren't satisfied
 	**/
-	void checkProperties() throw(PropertyViolationException);
+	void checkProperties() throw(PropertyViolationException) {
+
+		//if there isn't a cordolo, there is nothing to check
+		if(!c)
+			return;
+
+		isUnder();
+
+		//cordolo's height
+		float height = cordolo->y2 - cordolo->y1;
+		if(height < 0.2 || height > 0.4)
+			throw new PropertyViolationException(string("Cordolo's height out of range"));
+	}
+
+	/**
+	 * checks that "cordolo" is under "linea_piano"
+	 * NOTE: check documentation for the correct meaning
+	 * @throws PropertyViolationException
+	 */
+	void isUnder() throw(PropertyViolationException) {
+		if(cordolo->y2 > linea_piano->y1)
+			throw new PropertyViolationException(string("Cordolo is not under the Linea_Piano"));
+	}
 
 public:
 
 	//no null-pointer is allowed: in the grammar an "interpiano" must always have those tokens
 	Interpiano(token_ *lp, token_ *c) throw(IllegalArgumentException, PropertyViolationException) {
-		if((!c || !lp) || (c->type != CORDOLO_ || lp->type != LINEA_PIANO_))
+		if(!lp || lp->type != LINEA_PIANO_)
+			throw(new IllegalArgumentException(string("wrong token type")));
+		if(c && c->type != CORDOLO)
 			throw(new IllegalArgumentException(string("wrong token type")));
 
 		linea_piano = lp;
@@ -136,13 +222,27 @@ public:
 	}
 
 
-	token_ *getLineaPiano();
+	token_ *getLineaPiano() {
+		return linea_piano;
+	}
 
-	token_ *getCorridoio();
+	token_ *getCorridoio() {
+		return cordolo;
+	}
 
-	void setLineaPiano(token_ *lp) throw(IllegalArgumentException);
+	void setLineaPiano(token_ *lp) throw(IllegalArgumentException) {
+		if(lp->type != LINEA_PIANO_)
+			throw new IllegalArgumentException(string("Bad token type"));
 
-	void setCordolo(token_ *c) throw(IllegalArgumentException);
+		linea_piano = lp;
+	}
+
+	void setCordolo(token_ *c) throw(IllegalArgumentException) {
+		if(c->type != CORDOLO_)
+			throw new IllegalArgumentException(string("Bad token type"));
+
+		cordolo = c;
+	}
 
 };
 
@@ -167,7 +267,35 @@ private:
 	*		parete (if interpiani is empty)
 	* @throws PropertyViolationException if the properties aren't satisfied
 	**/
-	void checkProperties() throw(PropertyViolationException);
+	void checkProperties() throw(PropertyViolationException) {
+
+		if(interpiani.empty())
+			return;
+
+		//to check if "piano" contains "interpiani" means to check
+		//if every interpiano in the list is contained in the "parete"
+		for(list<int>::const_iterator it = interpiani.begin(); it != interpiani.end(); ++it) {
+			Interpiano *curr = it;
+			float x1 = curr->linea_piano->x1;
+			if(curr->cordolo && x1 > curr->cordolo->x1)
+				x1 = curr->cordolo->x1;
+
+			float x2 = curr->linea_piano->x2;
+			if(curr->cordolo && x2 < curr->cordolo->x2)
+				x2 = curr->cordolo->x2;
+
+			float y1 = curr->linea_piano->y1;
+			if(curr->cordolo && y1 > curr->cordolo->y1)
+				y1 = curr->cordolo->y1;
+
+			float y2 = curr->linea_piano->y2;
+			if(curr->cordolo && y2 < curr->cordolo->y2)
+				y2 = curr->cordolo->y2;
+
+			if(parete->x1 > x1 || parete->x2 < x2 || parete->y1 > y1 || parete->y2 < y2)
+				throw new PropertyViolationException(string("Interpiano not contained in Parete"));
+		}
+	}
 
 public:
 
@@ -191,13 +319,24 @@ public:
 		delete parete;
 	}
 
-	token_ *getParete();
+	token_ *getParete() {
+		return parete;
+	}
 
-	list<Interpiano> getInterpiani();
+	list<Interpiano> getInterpiani() {
+		return interpiani;
+	}
 
-	void setParete(token_ *p) throw(IllegalArgumentException) ;
+	void setParete(token_ *p) throw(IllegalArgumentException) {
+		if(p->type != PARETE_)
+			throw new IllegalArgumentException(string("Wrong token type"));
 
-	void setInterpiani(list<Interpiano> i);
+		parete = p;
+	}
+
+	void setInterpiani(list<Interpiano> i) {
+		interpiani = i;
+	}
 };
 
 
@@ -221,7 +360,26 @@ private:
 	*		PIANI <contains, not_intersect> APERTURE
 	* @throws PropertyViolationException if the properties aren't satisfied
 	**/
-	void checkProperties() throw(PropertyViolationException);
+	void checkProperties() throw(PropertyViolationException) {
+
+		for(list<int>::const_iterator it = a.begin(); it != a.end(); ++it) {
+			Apertura *curr = it;
+
+			//for Apertura's properties...
+			float x1 = curr->architrave->x1;
+			float x2 = curr->architrave->x2;
+
+			float y1 = curr->apertura->y1;
+			float y2 = curr->architrave->y2;
+
+			//check if there is a Piano that contains this Apertura
+			for(list<int>::const_iterator p_it = a.begin(); p_it != a.end(); ++p_it) {
+				Piani *p = p_it;
+				if(p->parete->x1 > x1 || p->parete->x2 < x2 || p->parete->y1 > y1 || p->parete->y2 < y2)
+					throw new PropertyViolationException(string("Apertura not contained in a Piano"));
+			}
+		}
+	}
 
 public:
 
@@ -234,13 +392,21 @@ public:
 	}
 
 
-	Piani getPiani();
+	Piani getPiani() {
+		return p;
+	}
 
-	list<Apertura> getAperture();
+	list<Apertura> getAperture() {
+		return a;
+	}
 
-	void setPiani(Piani &piani);
+	void setPiani(Piani &piani) {
+		p = piani
+	}
 
-	void setAperture(list<Apertura> a);
+	void setAperture(list<Apertura> a) {
+		this.a = a;
+	}
 
 	/**
 	* returns the list of Maschi calculated using "a" and "p"
