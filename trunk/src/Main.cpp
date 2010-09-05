@@ -1,10 +1,9 @@
 #include "EarthquakeScanner.h"
 #include "EarthquakeParser.h"
-
+using namespace Earthquake;
 // Entry Point
 int main(int argc, char * argv[]) {
-	Earthquake::FlexScanner *scanner = new Earthquake::FlexScanner();
-	Earthquake::Parser *parser = new Earthquake::Parser(scanner);
+	Earthquake::Parser parser;
 	return parser.parse();
 }
 

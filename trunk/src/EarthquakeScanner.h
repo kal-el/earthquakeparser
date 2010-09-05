@@ -11,19 +11,25 @@
 
 // Include Bison for types / tokens
 #include "normeantisismiche.tab.hh"
-#include <FlexLexer.h>
 #include <iostream>
 using namespace std;
 namespace Earthquake {
-	class FlexScanner : public yyFlexLexer {
+	class FlexScanner{
 		public:
-			FlexScanner();
-			FlexScanner(istream* arg_yyin, ostream* arg_yyout);
-			~FlexScanner();
+			FlexScanner(istream* arg_yyin=0, ostream* arg_yyout=0)
+			{
+
+			}
+			~FlexScanner()
+			{
+
+			}
+
 			// save the pointer to yylval so we can change it, and invoke scanner
-			int yylex(Earthquake::BisonParser::semantic_type * lval) {
+			int yylex(Earthquake::BisonParser::semantic_type * lval)
+			{
 				yylval = lval;
-				return yylex();
+				//return yylex();
 			}
 		
 		private:
@@ -36,3 +42,4 @@ namespace Earthquake {
 	};
 
 };
+

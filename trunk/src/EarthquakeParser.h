@@ -3,16 +3,16 @@
 namespace Earthquake {
 	class Parser {
 		public:
-			Parser(FlexScanner s){
-				parser = new BisonParser(s);
+			Parser() : parser(scanner){
+
 			}
 		
 			int parse() {
-				return this->parser->parse();
+				return parser.parse();
 			}
 		
 		private:
-			//Earthquake::FlexScanner scanner;
-			Earthquake::BisonParser *parser;
+			Earthquake::FlexScanner scanner;
+			Earthquake::BisonParser parser;
 	};
 }
