@@ -267,30 +267,34 @@ public:
 		if(interpiani.empty())
 			return;
 
+		/* NOTE: the iterator must be used as a pointer to use the methods of the object
+		 * it contains
+		 */
+
 		//to check if "piano" contains "interpiani" means to check
 		//if every interpiano in the list is contained in the "parete"
-/*		for(list<int>::const_iterator it = interpiani.begin(); it != interpiani.end(); ++it) {
-			Interpiano *curr = it;
-			float x1 = curr->linea_piano->x1;
-			if(curr->cordolo && x1 > curr->cordolo->x1)
-				x1 = curr->cordolo->x1;
+		for(list<Interpiano>::const_iterator it = interpiani.begin(); it != interpiani.end(); ++it) {
 
-			float x2 = curr->linea_piano->x2;
-			if(curr->cordolo && x2 < curr->cordolo->x2)
-				x2 = curr->cordolo->x2;
+			float x1 = it->linea_piano->x1;
+			if(it->cordolo && x1 > it->cordolo->x1)
+				x1 = it->cordolo->x1;
 
-			float y1 = curr->linea_piano->y1;
-			if(curr->cordolo && y1 > curr->cordolo->y1)
-				y1 = curr->cordolo->y1;
+			float x2 = it->linea_piano->x2;
+			if(it->cordolo && x2 < it->cordolo->x2)
+				x2 = it->cordolo->x2;
 
-			float y2 = curr->linea_piano->y2;
-			if(curr->cordolo && y2 < curr->cordolo->y2)
-				y2 = curr->cordolo->y2;
+			float y1 = it->linea_piano->y1;
+			if(it->cordolo && y1 > it->cordolo->y1)
+				y1 = it->cordolo->y1;
+
+			float y2 = it->linea_piano->y2;
+			if(it->cordolo && y2 < it->cordolo->y2)
+				y2 = it->cordolo->y2;
 
 			if(parete->x1 > x1 || parete->x2 < x2 || parete->y1 > y1 || parete->y2 < y2)
 				throw new PropertyViolationException(string("Interpiano not contained in Parete"));
 		}
-		*/
+
 	}
 
 
@@ -356,25 +360,31 @@ public:
 	* @throws PropertyViolationException if the properties aren't satisfied
 	**/
 	void checkProperties() throw(PropertyViolationException) {
-/*
-		for(list<int>::const_iterator it = a.begin(); it != a.end(); ++it) {
-			Apertura *curr = (Apertura)it;
+
+		for(list<Apertura>::const_iterator it = a.begin(); it != a.end(); ++it) {
+			//Apertura *curr = it;
 
 			//for Apertura's properties...
-			float x1 = curr->architrave->x1;
-			float x2 = curr->architrave->x2;
+			float x1 = it->architrave->x1;
+			float x2 = it->architrave->x2;
 
-			float y1 = curr->apertura->y1;
-			float y2 = curr->architrave->y2;
+			float y1 = it->apertura->y1;
+			float y2 = it->architrave->y2;
 
 			//check if there is a Piano that contains this Apertura
-			for(list<int>::const_iterator p_it = a.begin(); p_it != a.end(); ++p_it) {
-				Piani *p = p_it;
-				if(p->parete->x1 > x1 || p->parete->x2 < x2 || p->parete->y1 > y1 || p->parete->y2 < y2)
+			/*
+			for(list<Piani>::const_iterator p_it = a.begin(); p_it != a.end(); ++p_it) {
+
+				if(p_it->parete->x1 > x1 || p_it->parete->x2 < x2 || p_it->parete->y1 > y1 || p_it->parete->y2 < y2)
 					throw new PropertyViolationException(string("Apertura not contained in a Piano"));
 			}
+			*/
+
+			token_ * par = p.getParete();
+			if(par->x1 > x1 || par->x2 < x2 || par->y1 > y1 || par->y2 < y2)
+				throw new PropertyViolationException(string("Apertura not contained in a Piano"));
 		}
-		*/
+
 	}
 
 	Struttura(Piani listaPiani, list<Apertura> listaAperture) : p(listaPiani), a(listaAperture) {
