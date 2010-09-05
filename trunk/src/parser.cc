@@ -36,7 +36,7 @@
 /* First part of user declarations.  */
 
 /* Line 310 of lalr1.cc  */
-#line 4 "parser.yy"
+#line 4 "normeantisismiche.yy"
  /*** C/C++ Declarations ***/
 
 #include <stdio.h>
@@ -56,22 +56,21 @@
 /* User implementation prologue.  */
 
 /* Line 316 of lalr1.cc  */
-#line 97 "parser.yy"
+#line 97 "normeantisismiche.yy"
 
 
 #include "driver.h"
-#include "scanner.h"
-
+//#include "scanner.h"
 /* this "connects" the bison parser in the driver to the flex scanner class
  * object. it defines the yylex() function call to pull the next token from the
  * current lexer object of the driver context. */
 #undef yylex
-#define yylex driver.lexer->lex
+#define yylex driver.getNextToken
 
 
 
 /* Line 316 of lalr1.cc  */
-#line 75 "parser.cc"
+#line 74 "parser.cc"
 
 #ifndef YY_
 # if defined YYENABLE_NLS && YYENABLE_NLS
@@ -137,7 +136,7 @@ do {					\
 namespace earthquake {
 
 /* Line 379 of lalr1.cc  */
-#line 141 "parser.cc"
+#line 140 "parser.cc"
 #if YYERROR_VERBOSE
 
   /* Return YYSTR after stripping away unnecessary quotes and
@@ -240,29 +239,29 @@ namespace earthquake {
         case 11: /* "struttura" */
 
 /* Line 479 of lalr1.cc  */
-#line 93 "parser.yy"
+#line 93 "normeantisismiche.yy"
 	{ delete (yyvaluep->struttura); };
 
 /* Line 479 of lalr1.cc  */
-#line 248 "parser.cc"
+#line 247 "parser.cc"
 	break;
       case 12: /* "piani" */
 
 /* Line 479 of lalr1.cc  */
-#line 93 "parser.yy"
+#line 93 "normeantisismiche.yy"
 	{ delete (yyvaluep->piani); };
 
 /* Line 479 of lalr1.cc  */
-#line 257 "parser.cc"
+#line 256 "parser.cc"
 	break;
       case 15: /* "apertura" */
 
 /* Line 479 of lalr1.cc  */
-#line 93 "parser.yy"
+#line 93 "normeantisismiche.yy"
 	{ delete (yyvaluep->apertura); };
 
 /* Line 479 of lalr1.cc  */
-#line 266 "parser.cc"
+#line 265 "parser.cc"
 	break;
 
 	default:
@@ -341,14 +340,14 @@ namespace earthquake {
     /* User initialization code.  */
     
 /* Line 552 of lalr1.cc  */
-#line 41 "parser.yy"
+#line 41 "normeantisismiche.yy"
 {
     // initialize the initial location object
-    yylloc.begin.filename = yylloc.end.filename = &driver.streamname;
+    //@$.begin.filename = @$.end.filename = driver.streamname;
 }
 
 /* Line 552 of lalr1.cc  */
-#line 352 "parser.cc"
+#line 351 "parser.cc"
 
     /* Initialize the stacks.  The initial state will be pushed in
        yynewstate, since the latter expects the semantical and the
@@ -467,7 +466,7 @@ namespace earthquake {
 	  case 2:
 
 /* Line 677 of lalr1.cc  */
-#line 116 "parser.yy"
+#line 115 "normeantisismiche.yy"
     {
 		   //Struttura's contructor checks the <contains, not intersect> property
 	       (yyval.struttura) = new Struttura(*((yysemantic_stack_[(2) - (1)].piani)), ((yysemantic_stack_[(2) - (2)].ap))->getList());
@@ -484,7 +483,7 @@ namespace earthquake {
   case 3:
 
 /* Line 677 of lalr1.cc  */
-#line 131 "parser.yy"
+#line 130 "normeantisismiche.yy"
     {
 				list<Interpiano> interpianiList = (yysemantic_stack_[(2) - (1)].piani)->getInterpiani();
 				interpianiList.push_back(*((yysemantic_stack_[(2) - (2)].interpiano)));
@@ -495,7 +494,7 @@ namespace earthquake {
   case 4:
 
 /* Line 677 of lalr1.cc  */
-#line 138 "parser.yy"
+#line 137 "normeantisismiche.yy"
     {
 				(yyval.piani) = new Piani((yysemantic_stack_[(1) - (1)].element));
 			}
@@ -504,7 +503,7 @@ namespace earthquake {
   case 5:
 
 /* Line 677 of lalr1.cc  */
-#line 145 "parser.yy"
+#line 144 "normeantisismiche.yy"
     {
 					(yyval.interpiano) = new Interpiano((yysemantic_stack_[(2) - (1)].element), (yysemantic_stack_[(2) - (2)].element));
 				}
@@ -513,7 +512,7 @@ namespace earthquake {
   case 6:
 
 /* Line 677 of lalr1.cc  */
-#line 149 "parser.yy"
+#line 148 "normeantisismiche.yy"
     {
 					(yyval.interpiano) = new Interpiano((yysemantic_stack_[(1) - (1)].element));
 				}
@@ -522,7 +521,7 @@ namespace earthquake {
   case 7:
 
 /* Line 677 of lalr1.cc  */
-#line 156 "parser.yy"
+#line 155 "normeantisismiche.yy"
     {
 					((yysemantic_stack_[(2) - (1)].ap))->getList().push_back(*((yysemantic_stack_[(2) - (2)].apertura)));
 					(yyval.ap) = (yysemantic_stack_[(2) - (1)].ap);
@@ -532,7 +531,7 @@ namespace earthquake {
   case 8:
 
 /* Line 677 of lalr1.cc  */
-#line 161 "parser.yy"
+#line 160 "normeantisismiche.yy"
     {
 					list<Apertura> apertureList;
 					apertureList.push_back(*(yysemantic_stack_[(1) - (1)].apertura));
@@ -543,7 +542,7 @@ namespace earthquake {
   case 9:
 
 /* Line 677 of lalr1.cc  */
-#line 170 "parser.yy"
+#line 169 "normeantisismiche.yy"
     {
 				(yyval.apertura) = new Apertura((yysemantic_stack_[(2) - (1)].element), (yysemantic_stack_[(2) - (2)].element));
 			}
@@ -552,7 +551,7 @@ namespace earthquake {
 
 
 /* Line 677 of lalr1.cc  */
-#line 556 "parser.cc"
+#line 555 "parser.cc"
 	default:
           break;
       }
@@ -873,7 +872,7 @@ namespace earthquake {
   const unsigned char
   Parser::yyrline_[] =
   {
-         0,   115,   115,   130,   137,   144,   148,   155,   160,   169
+         0,   114,   114,   129,   136,   143,   147,   154,   159,   168
   };
 
   // Print the state stack on the debug stream.
@@ -963,16 +962,18 @@ namespace earthquake {
 } // earthquake
 
 /* Line 1053 of lalr1.cc  */
-#line 967 "parser.cc"
+#line 966 "parser.cc"
 
 
 /* Line 1055 of lalr1.cc  */
-#line 177 "parser.yy"
+#line 176 "normeantisismiche.yy"
  /*** Additional Code ***/
 
-void example::Parser::error(const Parser::location_type& l,
-			    const std::string& m)
-{
-    driver.error(l, m);
-}
+using namespace earthquake;
 
+
+
+int main(void)
+{
+	//return Parser::parse();
+}

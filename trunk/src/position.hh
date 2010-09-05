@@ -32,7 +32,7 @@
 
 /**
  ** \file position.hh
- ** Define the earthquake::position class.
+ ** Define the Earthquake::position class.
  */
 
 #ifndef BISON_POSITION_HH
@@ -43,10 +43,12 @@
 # include <algorithm>
 
 
-namespace earthquake {
+/* Line 37 of location.cc  */
+#line 16 "normeantisismiche.yy"
+namespace Earthquake {
 
 /* Line 37 of location.cc  */
-#line 50 "position.hh"
+#line 52 "position.hh"
   /// Abstract a position.
   class position
   {
@@ -154,8 +156,10 @@ namespace earthquake {
   }
 
 
-} // earthquake
+/* Line 144 of location.cc  */
+#line 16 "normeantisismiche.yy"
+} // Earthquake
 
 /* Line 144 of location.cc  */
-#line 161 "position.hh"
+#line 165 "position.hh"
 #endif // not BISON_POSITION_HH

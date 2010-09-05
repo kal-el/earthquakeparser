@@ -36,10 +36,12 @@
 #include <deque>
 
 
-namespace earthquake {
+/* Line 1066 of lalr1.cc  */
+#line 16 "normeantisismiche.yy"
+namespace Earthquake {
 
 /* Line 1066 of lalr1.cc  */
-#line 43 "stack.hh"
+#line 45 "stack.hh"
   template <class T, class S = std::deque<T> >
   class stack
   {
@@ -126,10 +128,12 @@ namespace earthquake {
     unsigned int range_;
   };
 
-} // earthquake
+/* Line 1152 of lalr1.cc  */
+#line 16 "normeantisismiche.yy"
+} // Earthquake
 
 /* Line 1152 of lalr1.cc  */
-#line 133 "stack.hh"
+#line 137 "stack.hh"
 
 #endif // not BISON_STACK_HH[]dnl
 

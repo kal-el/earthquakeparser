@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace earthquake {
+namespace Earthquake {
 
 struct token_ {
 	short int type;
@@ -22,7 +22,8 @@ struct token_ {
 * Class definitions
 *	Get and Set methods shouldn't be used, they are provided for debugging purpose
 **/
-
+class Apertura;
+class Aperture;
 
 
 /**
@@ -32,7 +33,7 @@ struct token_ {
 **/
 class Apertura {
 
-private:
+public:
 
 	token_ *apertura;
 	token_ *architrave;
@@ -90,9 +91,6 @@ private:
 		if(archLength < apLength)
 			throw new PropertyViolationException(string("Apertura is larger than Architrave"));
 	}
-
-public:
-
 
 	Apertura(token_ *ap, token_ *ar) throw(PropertyViolationException, IllegalArgumentException) {
 		
@@ -158,7 +156,7 @@ public:
 **/
 class Interpiano {
 
-private:
+public:
 
 	token_ *linea_piano;
 	token_ *cordolo;
@@ -171,7 +169,7 @@ private:
 	*		linea_piano (if cordolo is Null)
 	* @throws PropertyViolationException if the properties aren't satisfied
 	**/
-	void checkProperties() throw(PropertyViolationException) {
+	void checkProperties(token_* c) throw(PropertyViolationException) {
 
 		//if there isn't a cordolo, there is nothing to check
 		if(!c)
@@ -195,19 +193,16 @@ private:
 			throw new PropertyViolationException(string("Cordolo is not under the Linea_Piano"));
 	}
 
-public:
-
 	//no null-pointer is allowed: in the grammar an "interpiano" must always have those tokens
 	Interpiano(token_ *lp, token_ *c) throw(IllegalArgumentException, PropertyViolationException) {
 		if(!lp || lp->type != LINEA_PIANO_)
 			throw(new IllegalArgumentException(string("wrong token type")));
-		if(c && c->type != CORDOLO)
+		if(c && c->type != CORDOLO_)
 			throw(new IllegalArgumentException(string("wrong token type")));
 
 		linea_piano = lp;
 		cordolo = c;
 
-		checkProperties();
 	}
 
 	//to create the object with only linea_piano
@@ -254,7 +249,7 @@ public:
 **/
 class Piani {
 
-private:
+public:
 	
 	list<Interpiano> interpiani;
 	token_ *parete;
@@ -274,7 +269,7 @@ private:
 
 		//to check if "piano" contains "interpiani" means to check
 		//if every interpiano in the list is contained in the "parete"
-		for(list<int>::const_iterator it = interpiani.begin(); it != interpiani.end(); ++it) {
+/*		for(list<int>::const_iterator it = interpiani.begin(); it != interpiani.end(); ++it) {
 			Interpiano *curr = it;
 			float x1 = curr->linea_piano->x1;
 			if(curr->cordolo && x1 > curr->cordolo->x1)
@@ -295,9 +290,9 @@ private:
 			if(parete->x1 > x1 || parete->x2 < x2 || parete->y1 > y1 || parete->y2 < y2)
 				throw new PropertyViolationException(string("Interpiano not contained in Parete"));
 		}
+		*/
 	}
 
-public:
 
 	Piani(list<Interpiano> i, token_ *p=0) throw(IllegalArgumentException, PropertyViolationException) : interpiani(i) {
 		if(p && p->type != PARETE_)
@@ -349,7 +344,7 @@ public:
 **/
 class Struttura {
 
-private:
+public:
 	Piani p;
 	list<Apertura> a;
 
@@ -361,9 +356,9 @@ private:
 	* @throws PropertyViolationException if the properties aren't satisfied
 	**/
 	void checkProperties() throw(PropertyViolationException) {
-
+/*
 		for(list<int>::const_iterator it = a.begin(); it != a.end(); ++it) {
-			Apertura *curr = it;
+			Apertura *curr = (Apertura)it;
 
 			//for Apertura's properties...
 			float x1 = curr->architrave->x1;
@@ -379,9 +374,8 @@ private:
 					throw new PropertyViolationException(string("Apertura not contained in a Piano"));
 			}
 		}
+		*/
 	}
-
-public:
 
 	Struttura(Piani listaPiani, list<Apertura> listaAperture) : p(listaPiani), a(listaAperture) {
 	}
@@ -401,22 +395,26 @@ public:
 	}
 
 	void setPiani(Piani &piani) {
-		p = piani
+		p = piani;
 	}
 
 	void setAperture(list<Apertura> a) {
-		this.a = a;
+		this->a = a;
 	}
 
 	/**
 	* returns the list of Maschi calculated using "a" and "p"
 	**/
-	list<token_*> calcolaMaschi(); 
+	list<token_*> calcolaMaschi(){
+
+	}
 
 	/**
 	* throws an exception if one or more Maschi doesn't respect their properties
 	**/
-	void verificaProprietaMaschio(list<token_*> l) throw(PropertyViolationException);
+	void verificaProprietaMaschio(list<token_*> l) throw(PropertyViolationException){
+
+	}
 
 };
 
