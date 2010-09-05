@@ -3,7 +3,8 @@
 
 // Entry Point
 int main(int argc, char * argv[]) {
-	//Earthquake::Parser parser;
-	//return parser.parse();
+	Earthquake::FlexScanner scanner = new FlexScanner();
+	Earthquake::Parser parser = new Parser(scanner);
+	return parser.parse();
 }
 
