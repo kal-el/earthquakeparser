@@ -48,10 +48,10 @@ public:
 	void checkProperties() throw(PropertyViolationException) {
 		isAbove();
 
-		float height = apertura->y2 - apertura->y1;
+		float height = architrave->y2 - architrave->y1;
 
 		if(height < 0.1 || height > 0.2)
-			throw new PropertyViolationException(string("Apertura's height isn't between 0.1 and 0.2"));
+			throw new PropertyViolationException(string("Architrave's height isn't between 0.1 and 0.2"));
 
 		isCentered();
 		isLarger();
@@ -59,7 +59,6 @@ public:
 
 	/**
 	 * checks if "apertura" is not above "architrave"
-	 * NOTE: on the documentation is written that apertura is above the architrave
 	 * @throws PropertyViolationException if the property isn't satisfied
 	 */
 	void isAbove() throw(PropertyViolationException) {
@@ -81,7 +80,6 @@ public:
 
 	/**
 	 * checks if the "architrave" is larger than the "apertura"
-	 * NOTE: on the documentation is written the opposite
 	 * @throws PropertyViolationException if the property isn't satisfied
 	 */
 	void isLarger() throw(PropertyViolationException) {
@@ -185,7 +183,6 @@ public:
 
 	/**
 	 * checks that "cordolo" is under "linea_piano"
-	 * NOTE: check documentation for the correct meaning
 	 * @throws PropertyViolationException
 	 */
 	void isUnder() throw(PropertyViolationException) {
@@ -371,18 +368,17 @@ public:
 			float y1 = it->apertura->y1;
 			float y2 = it->architrave->y2;
 
-			//check if there is a Piano that contains this Apertura
-			/*
-			for(list<Piani>::const_iterator p_it = a.begin(); p_it != a.end(); ++p_it) {
-
-				if(p_it->parete->x1 > x1 || p_it->parete->x2 < x2 || p_it->parete->y1 > y1 || p_it->parete->y2 < y2)
-					throw new PropertyViolationException(string("Apertura not contained in a Piano"));
-			}
-			*/
-
+			//check if the Apertura doesn't intersect the Piano's parete
 			token_ * par = p.getParete();
 			if(par->x1 > x1 || par->x2 < x2 || par->y1 > y1 || par->y2 < y2)
 				throw new PropertyViolationException(string("Apertura not contained in a Piano"));
+
+			//check if the Apertura doesn't intersect any of the Piano's Interpiani
+			/* COMPLETARE
+			list interpiani = p.getInterpiani();
+			for(list<Interpiano>::const_iterator interpiano_it = interpiani.begin(); interpiano_it != interpiani.end(); ++interpiano_it) {
+				interpiano_it->
+			}*/
 		}
 
 	}
