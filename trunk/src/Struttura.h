@@ -374,11 +374,15 @@ public:
 				throw new PropertyViolationException(string("Apertura not contained in a Piano"));
 
 			//check if the Apertura doesn't intersect any of the Piano's Interpiani
-			/* COMPLETARE
-			list interpiani = p.getInterpiani();
+			list<Interpiano> interpiani = p.getInterpiani();
 			for(list<Interpiano>::const_iterator interpiano_it = interpiani.begin(); interpiano_it != interpiani.end(); ++interpiano_it) {
-				interpiano_it->
-			}*/
+
+				//it's useless to check x1 and x2
+				float i_y2 = interpiano_it->linea_piano->y2;
+
+				if(y1 < i_y2)
+					throw new PropertyViolationException(string("Apertura interstects with an Interpiano"));
+			}
 		}
 
 	}

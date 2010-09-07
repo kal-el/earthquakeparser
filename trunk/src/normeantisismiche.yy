@@ -42,7 +42,7 @@
     int  			integerVal;
     double 			doubleVal;
     std::string*		stringVal;
-    float a;
+    float floatVal;
     struct token_	*element;
     Apertura	*apertura;
 	Interpiano *interpiano;
@@ -53,12 +53,24 @@
 
 //Token List
 //if we need it, we can use %token TOKEN "blabla" to see blabla as a literal token (not yacc compatible)
-%token <struct token_ *> PARETE  
-%token <struct token_ *> LINEA_PIANO
-%token <struct token_ *> CORDOLO
-%token <struct token_ *> APERTURA
-%token <struct token_ *> ARCHITRAVE
-%token <struct token_ *> MASCHIO
+
+/* %token <struct token_ *> PARETE  
+	%token <struct token_ *> LINEA_PIANO
+	%token <struct token_ *> CORDOLO
+	%token <struct token_ *> APERTURA
+	%token <struct token_ *> ARCHITRAVE
+	%token <struct token_ *> MASCHIO
+*/
+
+%token PARETE  
+%token LINEAPIANO
+%token CORDOLO
+%token APERTURA
+%token APERTURE
+%token ARCHITRAVE
+%token MASCHIO
+%token INTERPIANO
+%token floatingp
 
 
 %token			END	     0	"end of file"
@@ -68,12 +80,12 @@
 %type <struttura>	struttura 
 %type <piani>	piani
 //%type <interpiano>	interpiano
-//%type <token>	CORDOLO PARETE LINEA_PIANO ARCHITRAVE MASCHIO APERTURA
+//%type <token>	CORDOLO PARETE LINEAPIANO ARCHITRAVE MASCHIO APERTURA
 %type <apertura>	apertura
 
 
 
-//%destructor { delete $$; } CORDOLO //PARETE LINEA_PIANO ARCHITRAVE APERTURA
+//%destructor { delete $$; } CORDOLO //PARETE LINEAPIANO ARCHITRAVE APERTURA
 
 %destructor { delete $$; } struttura piani apertura //interpiano
 
@@ -110,18 +122,18 @@ piani : piani interpiani
 				$$ = new Piani(interpianiList, $1->getParete());
 	       }
 		   
-		| PARETE
+		| parete_tk
 			{
 				$$ = new Piani($<element>1);
 			}
 	   
 
-			/** LINEA_PIANO <isUnder, Height(0.2,0.4)> CORDOLO **/
-interpiani : LINEA_PIANO CORDOLO
+			/** LINEAPIANO <isUnder, Height(0.2,0.4)> CORDOLO **/
+interpiani : lineapiano_tk cordolo_tk
 				{
 					$<interpiano>$ = new Interpiano($<element>1, $<element>2);
 				}
-			| LINEA_PIANO
+			| lineapiano_tk
 				{
 					$<interpiano>$ = new Interpiano($<element>1);
 				}
@@ -142,10 +154,77 @@ aperture	: aperture apertura
 
 				
 			/** APERTURA <isAbove, Height(0.1,0.2),isCentered,isLarger(0.15,0.3)> ARCHITRAVE **/
-apertura : APERTURA ARCHITRAVE
+apertura : apertura_tk architrave_tk
 			{
 				$$ = new Apertura($<element>1, $<element>2);
 			}
+			
+	
+apertura_tk : APERTURA floatingp floatingp floatingp floatingp
+			{
+				token_ * t = (token_ *)malloc(sizeof(token_*));
+				t->type = $<integerVal>1;
+				t->x1 = $<floatVal>2;
+				t->y1 = $<floatVal>3;
+				t->x2 = $<floatVal>4;
+				t->y2 = $<floatVal>5;
+				
+				$<element>$ = t;
+			}
+			
+			
+architrave_tk : ARCHITRAVE floatingp floatingp floatingp floatingp
+			{
+				token_ * t = (token_ *)malloc(sizeof(token_*));
+				t->type = $<integerVal>1;
+				t->x1 = $<floatVal>2;
+				t->y1 = $<floatVal>3;
+				t->x2 = $<floatVal>4;
+				t->y2 = $<floatVal>5;
+				
+				$<element>$ = t;
+			}
+			
+			
+lineapiano_tk : LINEAPIANO floatingp floatingp floatingp floatingp
+			{
+				token_ * t = (token_ *)malloc(sizeof(token_*));
+				t->type = $<integerVal>1;
+				t->x1 = $<floatVal>2;
+				t->x2 = $<floatVal>3;
+				t->y1 = $<floatVal>4;
+				t->y2 = $<floatVal>5;
+				
+				$<element>$ = t;
+			}
+			
+			
+cordolo_tk : CORDOLO floatingp floatingp floatingp floatingp
+			{
+				token_ * t = (token_ *)malloc(sizeof(token_*));
+				t->type = $<integerVal>1;
+				t->x1 = $<floatVal>2;
+				t->x2 = $<floatVal>3;
+				t->y1 = $<floatVal>4;
+				t->y2 = $<floatVal>5;
+				
+				$<element>$ = t;
+			}
+			
+			
+parete_tk : PARETE floatingp floatingp floatingp floatingp
+			{
+				token_ * t = (token_ *)malloc(sizeof(token_*));
+				t->type = $<integerVal>1;
+				t->x1 = $<floatVal>2;
+				t->x2 = $<floatVal>3;
+				t->y1 = $<floatVal>4;
+				t->y2 = $<floatVal>5;
+				
+				$<element>$ = t;
+			}
+			
+			
             
 			
  /*** END EXAMPLE - Change the example grammar rules above ***/
