@@ -1,1 +1,0 @@
-bison --define=parser.h --output=parser.cc parser.yy
