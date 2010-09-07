@@ -8,7 +8,7 @@
 #include <vector>
 #include <list>
 #include "Struttura.h"
-
+//#include "EarthquakeScanner.h"
 %}
 
 %skeleton "lalr1.cc"
