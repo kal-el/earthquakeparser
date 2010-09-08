@@ -131,7 +131,7 @@ floatingp    {num}"."{num}
 }
 
 <INITIAL,PARETE,LINEAPIANO,APERTURA,ARCHITRAVE,CORDOLO>"\n" {
-	//curr_lineno++;
+	curr_lineno++;
 }
 
 <INITIAL,PARETE,LINEAPIANO,APERTURE,ARCHITRAVE,CORDOLO>. {

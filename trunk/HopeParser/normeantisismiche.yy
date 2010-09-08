@@ -69,7 +69,7 @@
 //%token MASCHIO
 //%token INTERPIANO	"INTERPIANO"
 %token f_const_		111
-%token ERROR	"ERROR"
+%token ERROR 113
 
 
 %token			END	     0	"end of file"
@@ -118,8 +118,8 @@ struttura : piani aperture
 		/** piani <contains> interpiani **/
 piani : piani interpiani
            {
-           		printf("INTERPIANI %d %f %f %f %f",$<element>2->type,$<element>2->x1,$<element>2->y1,
-           			$<element>2->x2,$<element>2->y2);
+           		printf("INTERPIANI %d %f %f %f %f",$<element>2->type,$<element>2->x1,
+           			$<element>2->y1,$<element>2->x2,$<element>2->y2);
 				list<Interpiano> interpianiList = $<piani>1->getInterpiani();
 				interpianiList.push_back(*($<interpiano>2));
 				$$ = new Piani(interpianiList, $1->getParete());
@@ -127,10 +127,9 @@ piani : piani interpiani
 		   
 		| parete_tk
 			{
-			//int tipo = $<element>1->type;
-			//float
-			printf("PIANI_pr2: %d %.1f %f %f %f",$<element>1->type,(float)$<element>1->x1,$<element>1->y1,$<element>1->x2,
-					$<element>1->y2);
+			printf("PIANI_pr2: %d %.1f %f %f %f",$<element>1->type,
+				$<element>1->x1,$<element>1->y1,$<element>1->x2,
+			$<element>1->y2);
 				$$ = new Piani($<element>1);
 			}
 	   
