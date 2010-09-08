@@ -19,7 +19,7 @@
 #define MAX_STR_CONST 1025
 #define YY_NO_UNPUT   /* keep g++ happy */
 
-FILE *fin; /* we read from this file */
+extern FILE *fin; /* we read from this file */
 
 /* define YY_INPUT so we read from the FILE fin:
  * This change makes it possible to use this scanner in
@@ -48,7 +48,7 @@ int prevstate;
 
 %option nodefault yyclass="FlexScanner" noyywrap c++
 
-%x INTERPIANO APERTURE PARETE LINEAPIANO APERTURA ARCHITRAVE CORDOLO
+%x INTERPIANO APERTURE PARETE LINEAPIANO APERTURA ARCHITRAVE CORDOLO ERROR
 num          [0-9]+
 floatingp    {num}"."{num}
 %%

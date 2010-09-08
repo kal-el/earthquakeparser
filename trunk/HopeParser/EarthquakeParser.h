@@ -6,6 +6,7 @@ namespace Earthquake {
 			Parser() : parser(scanner) {}
 		
 			int parse() {
+
 				return parser.parse();
 			}
 		

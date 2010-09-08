@@ -17,7 +17,13 @@ namespace Earthquake {
 	class FlexScanner : public yyFlexLexer {
 		public:
 			// save the pointer to yylval so we can change it, and invoke scanner
-			int yylex(Earthquake::BisonParser::semantic_type * lval) { yylval = lval; return yylex(); }
+			int yylex(Earthquake::BisonParser::semantic_type * lval) {
+				yylval = lval;
+				std::cout << lval << std::endl;
+			//std::cout << yylex() << "----------------------------\n";
+			int v = yylex();
+			std::cout << v << "----------------------------\n";
+			return v; }
 
 		private:
 			// Scanning function created by Flex; make this private to force usage
