@@ -77,7 +77,7 @@ floatingp    {num}"."{num}
 }
 
 <PARETE,LINEAPIANO,APERTURA,ARCHITRAVE,CORDOLO>[0-9]+("."[0-9]+)?";" {
-	//yylval.symbol = floattable.add_string(yytext,yyleng-1);
+	normeAntisismiche_yylval.symbol = floattable.add_string(yytext,yyleng-1);
 	//yytext[yyleng-1]='\0';
 	//printf("%s", yytext);		
 	return(float_const);

@@ -186,7 +186,6 @@ apertura_tk : APERTURA f_const_ f_const_ f_const_ f_const_
 				t->y1 = $<floatVal>3;
 				t->x2 = $<floatVal>4;
 				t->y2 = $<floatVal>5;
-				
 				$<element>$ = t;
 			}
 			
@@ -212,7 +211,6 @@ architrave_tk : ARCHITRAVE f_const_ f_const_ f_const_ f_const_
 				t->y1 = $<floatVal>3;
 				t->x2 = $<floatVal>4;
 				t->y2 = $<floatVal>5;
-				
 				$<element>$ = t;
 			}
 			
@@ -233,7 +231,6 @@ lineapiano_tk : LINEAPIANO f_const_ f_const_ f_const_ f_const_
 				t->x2 = $<floatVal>3;
 				t->y1 = $<floatVal>4;
 				t->y2 = $<floatVal>5;
-				
 				$<element>$ = t;
 			}
 			
@@ -246,15 +243,13 @@ lineapiano_tk : LINEAPIANO f_const_ f_const_ f_const_ f_const_
 			
 cordolo_tk : CORDOLO f_const_ f_const_ f_const_ f_const_
 			{
-			cout << "CORDOLO: " << CORDOLO_ << ": " << $<floatVal>2 << " || " << $<floatVal>3 << " || " << $<floatVal>4 << " || " << $<floatVal>5 << "\n\n";
-			
+			//cout << "CORDOLO: " << CORDOLO_ << ": " << $<floatVal>2 << " || " << $<floatVal>3 << " || " << $<floatVal>4 << " || " << $<floatVal>5 << "\n\n";
 				token_ * t = (token_ *)malloc(sizeof(token_*));
 				t->type = CORDOLO_;
 				t->x1 = $<floatVal>2;
 				t->x2 = $<floatVal>3;
 				t->y1 = $<floatVal>4;
 				t->y2 = $<floatVal>5;
-				
 				$<element>$ = t;
 			}
 			
@@ -267,15 +262,14 @@ cordolo_tk : CORDOLO f_const_ f_const_ f_const_ f_const_
 			
 parete_tk : PARETE f_const_ f_const_ f_const_ f_const_
 			{
-			cout << "PARETE: " << PARETE_ << ": " << $<floatVal>2 << " || " << $<floatVal>3 << " || " << $<floatVal>4 << " || " << $<floatVal>5 << "\n\n";
-			
 				token_ * t = (token_ *)malloc(sizeof(token_*));
 				t->type = PARETE_;
 				t->x1 = $<floatVal>2;
 				t->x2 = $<floatVal>3;
 				t->y1 = $<floatVal>4;
 				t->y2 = $<floatVal>5;
-				
+				cout << "PARETEEEEEEEE" << " " << t->x1 << " " << t->y1 
+				<< " " << $<floatVal>4 << " " << $<floatVal>5 << endl;
 				$<element>$ = t;
 			}
 			

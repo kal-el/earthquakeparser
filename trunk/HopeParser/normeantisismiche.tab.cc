@@ -567,7 +567,6 @@ namespace Earthquake {
 				t->y1 = (yysemantic_stack_[(5) - (3)].floatVal);
 				t->x2 = (yysemantic_stack_[(5) - (4)].floatVal);
 				t->y2 = (yysemantic_stack_[(5) - (5)].floatVal);
-				
 				(yyval.element) = t;
 			}
     break;
@@ -575,7 +574,7 @@ namespace Earthquake {
   case 11:
 
 /* Line 678 of lalr1.cc  */
-#line 194 "normeantisismiche.yy"
+#line 193 "normeantisismiche.yy"
     {
 					//error(@$, "che palleeee\n");
 					cout << "NOOOOOO\n";
@@ -585,7 +584,7 @@ namespace Earthquake {
   case 12:
 
 /* Line 678 of lalr1.cc  */
-#line 199 "normeantisismiche.yy"
+#line 198 "normeantisismiche.yy"
     {
 					//error(@$, "che palleeee\n");
 					cout << "NOOOOOO\n";
@@ -595,7 +594,7 @@ namespace Earthquake {
   case 13:
 
 /* Line 678 of lalr1.cc  */
-#line 206 "normeantisismiche.yy"
+#line 205 "normeantisismiche.yy"
     {
 			cout << "ARCHITRAVE: " << ARCHITRAVE_ << ": " << (yysemantic_stack_[(5) - (2)].floatVal) << " || " << (yysemantic_stack_[(5) - (3)].floatVal) << " || " << (yysemantic_stack_[(5) - (4)].floatVal) << " || " << (yysemantic_stack_[(5) - (5)].floatVal) << "\n\n";
 			
@@ -605,7 +604,6 @@ namespace Earthquake {
 				t->y1 = (yysemantic_stack_[(5) - (3)].floatVal);
 				t->x2 = (yysemantic_stack_[(5) - (4)].floatVal);
 				t->y2 = (yysemantic_stack_[(5) - (5)].floatVal);
-				
 				(yyval.element) = t;
 			}
     break;
@@ -613,7 +611,7 @@ namespace Earthquake {
   case 14:
 
 /* Line 678 of lalr1.cc  */
-#line 220 "normeantisismiche.yy"
+#line 218 "normeantisismiche.yy"
     {
 					//error(@$, "che palleeee\n");
 					cout << "NOOOOOO\n";
@@ -623,7 +621,7 @@ namespace Earthquake {
   case 15:
 
 /* Line 678 of lalr1.cc  */
-#line 227 "normeantisismiche.yy"
+#line 225 "normeantisismiche.yy"
     {
 			cout << "LINEAPIANO: " << ": " << (yysemantic_stack_[(5) - (2)].floatVal) << " || " << (yysemantic_stack_[(5) - (3)].floatVal) << " || " << (yysemantic_stack_[(5) - (4)].floatVal) << " || " << (yysemantic_stack_[(5) - (5)].floatVal) << "\n\n";
 			
@@ -633,7 +631,6 @@ namespace Earthquake {
 				t->x2 = (yysemantic_stack_[(5) - (3)].floatVal);
 				t->y1 = (yysemantic_stack_[(5) - (4)].floatVal);
 				t->y2 = (yysemantic_stack_[(5) - (5)].floatVal);
-				
 				(yyval.element) = t;
 			}
     break;
@@ -641,7 +638,7 @@ namespace Earthquake {
   case 16:
 
 /* Line 678 of lalr1.cc  */
-#line 241 "normeantisismiche.yy"
+#line 238 "normeantisismiche.yy"
     {
 					//error(@$, "che palleeee\n");
 					cout << "NOOOOOO\n";
@@ -651,17 +648,15 @@ namespace Earthquake {
   case 17:
 
 /* Line 678 of lalr1.cc  */
-#line 248 "normeantisismiche.yy"
+#line 245 "normeantisismiche.yy"
     {
-			cout << "CORDOLO: " << CORDOLO_ << ": " << (yysemantic_stack_[(5) - (2)].floatVal) << " || " << (yysemantic_stack_[(5) - (3)].floatVal) << " || " << (yysemantic_stack_[(5) - (4)].floatVal) << " || " << (yysemantic_stack_[(5) - (5)].floatVal) << "\n\n";
-			
+			//cout << "CORDOLO: " << CORDOLO_ << ": " << $<floatVal>2 << " || " << $<floatVal>3 << " || " << $<floatVal>4 << " || " << $<floatVal>5 << "\n\n";
 				token_ * t = (token_ *)malloc(sizeof(token_*));
 				t->type = CORDOLO_;
 				t->x1 = (yysemantic_stack_[(5) - (2)].floatVal);
 				t->x2 = (yysemantic_stack_[(5) - (3)].floatVal);
 				t->y1 = (yysemantic_stack_[(5) - (4)].floatVal);
 				t->y2 = (yysemantic_stack_[(5) - (5)].floatVal);
-				
 				(yyval.element) = t;
 			}
     break;
@@ -669,7 +664,7 @@ namespace Earthquake {
   case 18:
 
 /* Line 678 of lalr1.cc  */
-#line 262 "normeantisismiche.yy"
+#line 257 "normeantisismiche.yy"
     {
 					//error(@$, "che palleeee\n");
 					cout << "NOOOOOO\n";
@@ -679,17 +674,16 @@ namespace Earthquake {
   case 19:
 
 /* Line 678 of lalr1.cc  */
-#line 269 "normeantisismiche.yy"
+#line 264 "normeantisismiche.yy"
     {
-			cout << "PARETE: " << PARETE_ << ": " << (yysemantic_stack_[(5) - (2)].floatVal) << " || " << (yysemantic_stack_[(5) - (3)].floatVal) << " || " << (yysemantic_stack_[(5) - (4)].floatVal) << " || " << (yysemantic_stack_[(5) - (5)].floatVal) << "\n\n";
-			
 				token_ * t = (token_ *)malloc(sizeof(token_*));
 				t->type = PARETE_;
 				t->x1 = (yysemantic_stack_[(5) - (2)].floatVal);
 				t->x2 = (yysemantic_stack_[(5) - (3)].floatVal);
 				t->y1 = (yysemantic_stack_[(5) - (4)].floatVal);
 				t->y2 = (yysemantic_stack_[(5) - (5)].floatVal);
-				
+				cout << "PARETEEEEEEEE" << " " << t->x1 << " " << t->y1 
+				<< " " << (yysemantic_stack_[(5) - (4)].floatVal) << " " << (yysemantic_stack_[(5) - (5)].floatVal) << endl;
 				(yyval.element) = t;
 			}
     break;
@@ -697,7 +691,7 @@ namespace Earthquake {
   case 20:
 
 /* Line 678 of lalr1.cc  */
-#line 283 "normeantisismiche.yy"
+#line 277 "normeantisismiche.yy"
     {
 					cout << "CCCCCCC\n";
 				}
@@ -706,7 +700,7 @@ namespace Earthquake {
 
 
 /* Line 678 of lalr1.cc  */
-#line 710 "normeantisismiche.tab.cc"
+#line 704 "normeantisismiche.tab.cc"
 	default:
           break;
       }
@@ -1061,8 +1055,8 @@ namespace Earthquake {
   BisonParser::yyrline_[] =
   {
          0,   103,   103,   119,   128,   138,   145,   154,   161,   172,
-     180,   193,   198,   205,   219,   226,   240,   247,   261,   268,
-     282
+     180,   192,   197,   204,   217,   224,   237,   244,   256,   263,
+     276
   };
 
   // Print the state stack on the debug stream.
@@ -1153,11 +1147,11 @@ namespace Earthquake {
 } // Earthquake
 
 /* Line 1054 of lalr1.cc  */
-#line 1157 "normeantisismiche.tab.cc"
+#line 1151 "normeantisismiche.tab.cc"
 
 
 /* Line 1056 of lalr1.cc  */
-#line 289 "normeantisismiche.yy"
+#line 283 "normeantisismiche.yy"
  /*** Additional Code ***/
 
 void Earthquake::BisonParser::error(const Earthquake::BisonParser::location_type &loc, const std::string &msg) {

@@ -2,7 +2,7 @@
 // See copyright.h for copyright notice and limitation of liability
 // and disclaimer of warranty provisions.
 //
-#include "copyright.h"
+//#include "copyright.h"
 
 #include "normeAntisismiche-io.h"
 #define MAXSIZE 1000000

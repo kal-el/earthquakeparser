@@ -760,7 +760,7 @@ case 3:
 YY_RULE_SETUP
 #line 79 "norme.flex"
 {
-	//yylval.symbol = floattable.add_string(yytext,yyleng-1);
+	normeAntisismiche_yylval.symbol = floattable.add_string(yytext,yyleng-1);
 	//yytext[yyleng-1]='\0';
 	//printf("%s", yytext);		
 	return(float_const);
