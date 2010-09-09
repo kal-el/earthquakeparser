@@ -10,6 +10,7 @@
 #define _NORMEANTISISMICHE_H_
 
 #include "normeAntisismiche-io.h"
+#include "Struttura.h"
 
 /* a type renaming */
 typedef int Boolean;
@@ -27,34 +28,21 @@ void dump_Symbol(ostream &,int,Symbol);
 #endif
 #include "tree.h"
 
-// qua vanno definite le varie classi utilizzate in fase di analisi sintattica
-/* ad esempio:
-typedef class Program_class *Program;
-typedef class Class__class *Class_;
-typedef class Feature_class *Feature;
-typedef class Formal_class *Formal;
-typedef class Expression_class *Expression;
-*/
 #ifndef BISON_NORMEANTISISMICHE_TAB_H
-# define BISON_NORMEANTISISMICHE_TAB_H
+#define BISON_NORMEANTISISMICHE_TAB_H
 
 #ifndef YYSTYPE
-typedef union {
+typedef union
+{
 // qui vanno definiti i vari nodi dell'albero sintattico
-  Symbol symbol;
-/*  Boolean boolean;
-  Program program;
-  Class_ class_;
-  Classes classes;
-  Feature feature;
-  Features features;
-  Formal formal;
-  Formals formals;
-  Case case_;
-  Cases cases;
-  Expression expression;
-  Expressions expressions; */
-  char *error_msg; 
+  Symbol 		symbol;
+  Earthquake::Apertura 		*apertura;
+  Earthquake::Aperture 		*aperture;
+  Earthquake::Interpiano 	*interpiano;
+  Earthquake::Piani 		*piani;
+  Earthquake::Struttura 	*struttura;
+  Earthquake::token_ 		*token;
+  char 			*error_msg;
 } yystype;
 # define YYSTYPE yystype
 # define YYSTYPE_IS_TRIVIAL 1

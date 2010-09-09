@@ -268,7 +268,7 @@ parete_tk : PARETE f_const_ f_const_ f_const_ f_const_
 				t->x2 = $<floatVal>3;
 				t->y1 = $<floatVal>4;
 				t->y2 = $<floatVal>5;
-				cout << "PARETEEEEEEEE" << " " << t->x1 << " " << t->y1 
+				cout << "PARETEEEEEEEE " << " %.2f" << t->x1 << " " << t->y1 
 				<< " " << $<floatVal>4 << " " << $<floatVal>5 << endl;
 				$<element>$ = t;
 			}

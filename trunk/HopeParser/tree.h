@@ -395,9 +395,9 @@ template <class Elem> single_list_node<Elem> *list(Elem x)
 // cons
 //
 ///////////////////////////////////////////////////////////////////////////
-template <class Elem> append_node<Elem> *cons(Elem x, list_node<Elem> *l)
+template <class Elem> append_node<Elem> *cons(Elem x, list_node<Elem> *li)
 {
-    return new append_node<Elem>(list(x), l);
+    return new append_node<Elem>(list(x), li);
 }
 
 
@@ -406,9 +406,9 @@ template <class Elem> append_node<Elem> *cons(Elem x, list_node<Elem> *l)
 // xcons
 //
 ///////////////////////////////////////////////////////////////////////////
-template <class Elem> append_node<Elem> *xcons(list_node<Elem> *l, Elem x)
+template <class Elem> append_node<Elem> *xcons(list_node<Elem> *li, Elem x)
 {
-    return new append_node<Elem>(l, list(x));
+    return new append_node<Elem>(li, list(x));
 }
 
 #endif /* TREE_H */

@@ -682,7 +682,7 @@ namespace Earthquake {
 				t->x2 = (yysemantic_stack_[(5) - (3)].floatVal);
 				t->y1 = (yysemantic_stack_[(5) - (4)].floatVal);
 				t->y2 = (yysemantic_stack_[(5) - (5)].floatVal);
-				cout << "PARETEEEEEEEE" << " " << t->x1 << " " << t->y1 
+				cout << "PARETEEEEEEEE " << " %.2f" << t->x1 << " " << t->y1 
 				<< " " << (yysemantic_stack_[(5) - (4)].floatVal) << " " << (yysemantic_stack_[(5) - (5)].floatVal) << endl;
 				(yyval.element) = t;
 			}

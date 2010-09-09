@@ -13,6 +13,7 @@
 #include "stringtab.h"
 #include "utilities.h"
 #include "EarthquakeScanner.h"
+#include <stdio.h>
 /* The compiler assumes these identifiers. */
 
 /* Max size of string constants */
@@ -55,7 +56,8 @@ floatingp    {num}"."{num}
 
 
  /*
-  *  Nested comments
+  *  Nested comment
+ 
   */
 
 
@@ -76,11 +78,16 @@ floatingp    {num}"."{num}
 	return(parete);
 }
 
-<PARETE,LINEAPIANO,APERTURA,ARCHITRAVE,CORDOLO>[0-9]+("."[0-9]+)?";" {
-	normeAntisismiche_yylval.symbol = floattable.add_string(yytext,yyleng-1);
+
+<PARETE,LINEAPIANO,APERTURA,ARCHITRAVE,CORDOLO>[0-9]+("."[0-9]+)? {
+	normeAntisismiche_yylval.symbol = floattable.add_float(atof(yytext));
 	//yytext[yyleng-1]='\0';
-	//printf("%s", yytext);		
+	//printf("LEEEEEEXEEEEER %s\n", yytext);		
 	return(float_const);
+}
+
+<PARETE,LINEAPIANO,APERTURA,ARCHITRAVE,CORDOLO>";" {
+	
 }
 
 <PARETE,LINEAPIANO,APERTURA,ARCHITRAVE,CORDOLO>"$$$" {

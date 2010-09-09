@@ -11,7 +11,7 @@
 
 // Include Bison for types / tokens
 #include "normeantisismiche.tab.hh"
-
+#include <stdio.h>
 
 namespace Earthquake {
 	class FlexScanner : public yyFlexLexer {
