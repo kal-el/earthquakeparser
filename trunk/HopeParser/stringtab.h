@@ -27,7 +27,7 @@ extern ostream& operator<<(ostream& s, Symbol sym);
 /////////////////////////////////////////////////////////////////////////
 
 class Entry {
-protected:
+public:
   char *str;     // the string
   int  len;      // the length of the string (without trailing \0)
   int index;     // a unique index for each string

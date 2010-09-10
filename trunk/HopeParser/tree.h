@@ -408,7 +408,7 @@ template <class Elem> append_node<Elem> *cons(Elem x, list_node<Elem> *li)
 ///////////////////////////////////////////////////////////////////////////
 template <class Elem> append_node<Elem> *xcons(list_node<Elem> *li, Elem x)
 {
-    return new append_node<Elem>(li, list(x));
+    return new append_node<Elem>(li,list(x));
 }
 
 #endif /* TREE_H */

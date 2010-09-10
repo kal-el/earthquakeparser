@@ -27,13 +27,13 @@
 	// Forward-declare the Scanner class; the Parser needs to be assigned a 
 	// Scanner, but the Scanner can't be declared without the Parser
 	namespace Earthquake {
-		class FlexScanner;
-		class Apertura;
-		class Aperture;
-		class Interpiano;
-		class Piani;
-		class Struttura;
-		struct token_;
+		 class FlexScanner;
+		 class Apertura;
+		 class Aperture;
+		 class Interpiano;
+		 class Piani;
+		 class Struttura;
+		 struct token_;
 	}
 	class FloatEntry;
 	class Entry;
@@ -77,11 +77,11 @@ extern Earthquake::BisonParser::semantic_type normeAntisismiche_yylval;
 %token ARCHITRAVE	65
 //%token MASCHIO
 //%token INTERPIANO	"INTERPIANO"
-%token <symbol> f_const_		111
-%token ERROR 113
-
-
-
+//%token <symbol> f_const_		111
+%token			f_const_	111
+%token 			ERROR 		113
+%token 			SEMICOLON 	2
+%token 			SEPARATOR 	3
 %token			END	     0	"end of file"
 %token			EOL		"end of line"
 
@@ -91,6 +91,7 @@ extern Earthquake::BisonParser::semantic_type normeAntisismiche_yylval;
 //%type <inter>	interpiano
 //%type <token>	CORDOLO PARETE LINEAPIANO ARCHITRAVE MASCHIO APERTURA
 %type <open>	APERTURA
+%type <float>	coord
 
 
 
@@ -112,8 +113,7 @@ extern Earthquake::BisonParser::semantic_type normeAntisismiche_yylval;
 			/** piani <contains, not intersect> aperture **/
 struttura : piani aperture
            {
-           cout << "STRUTTURAAAAAAHHHHH\n\n";
-		   //Struttura's contructor checks the <contains, not intersect> property
+           //Struttura's contructor checks the <contains, not intersect> property
 	       $$ = new Struttura(*($1), ($<openings>2)->getList());
 		   list<token_*> maschi = $$->calcolaMaschi();
 		   try{
@@ -128,18 +128,13 @@ struttura : piani aperture
 		/** piani <contains> interpiani **/
 piani : piani interpiani
            {
-           		printf("INTERPIANI %d %f %f %f %f",$<element>2->type,$<element>2->x1,
-           			$<element>2->y1,$<element>2->x2,$<element>2->y2);
-				list<Interpiano> interpianiList = $<floors>1->getInterpiani();
+           		list<Interpiano> interpianiList = $<floors>1->getInterpiani();
 				interpianiList.push_back(*($<inter>2));
 				$$ = new Piani(interpianiList, $1->getParete());
 	       }
 		   
 		| parete_tk
 			{
-			printf("PIANI_pr2: %d %.1f %f %f %f",$<element>1->type,
-				$<element>1->x1,$<element>1->y1,$<element>1->x2,
-			$<element>1->y2);
 				$$ = new Piani($<element>1);
 			}
 	   
@@ -154,8 +149,7 @@ interpiani : lineapiano_tk cordolo_tk
 				}
 			| lineapiano_tk
 				{
-				cout << "INTERPIANI_pr2: " << $<element>1->type << " || " << $<element>1->x1 << " || " << $<element>1->y1 << $<element>1->x2 << " || " << $<element>1->y2 <<"\n\n";
-				
+					//cout << "INTERPIANI_pr2: " << $<element>1->type << " || " << $<element>1->x1 << " || " << $<element>1->y1 << $<element>1->x2 << " || " << $<element>1->y2 <<"\n\n";
 					$<inter>$ = new Interpiano($<element>1);
 				}
            
@@ -170,8 +164,6 @@ aperture	: aperture apertura_pr
 				}
 			| apertura_pr
 				{
-				cout << "APERTURA_pr2: " << $<element>1->type << " || " << $<element>1->x1 << " || " << $<element>1->y1 << " || " << $<element>1->x2 << " || " << $<element>1->y2 << "\n\n";
-				
 					list<Apertura> apertureList;
 					apertureList.push_back(*($<open>1));
 					$<openings>$ = new Aperture(apertureList);
@@ -181,8 +173,8 @@ aperture	: aperture apertura_pr
 			/** APERTURA <isAbove, Height(0.1,0.2),isCentered,isLarger(0.15,0.3)> ARCHITRAVE **/
 apertura_pr : apertura_tk architrave_tk
 			{
-			cout << "APERTURA_PR: " << $<element>1->type << " || " << $<element>1->x1 << " || " << $<element>1->y1 << " || " << $<element>1->x2 << " || " << $<element>1->y2 
-				<< "\n-" << $<element>2->type << " || " << $<element>2->x1 << " || " << $<element>2->y1 << $<element>2->x2 << " || " << $<element>2->y2 <<"\n\n";
+			/*cout << "APERTURA_PR: " << $<element>1->type << " || " << $<element>1->x1 << " || " << $<element>1->y1 << " || " << $<element>1->x2 << " || " << $<element>1->y2 
+				<< "\n-" << $<element>2->type << " || " << $<element>2->x1 << " || " << $<element>2->y1 << $<element>2->x2 << " || " << $<element>2->y2 <<"\n\n";*/
 				$<open>$ = new Apertura($<element>1, $<element>2);
 			}
 			
@@ -265,33 +257,28 @@ cordolo_tk : CORDOLO f_const_ f_const_ f_const_ f_const_
 			
 			| CORDOLO error
 				{
-					//error(@$, "che palleeee\n");
-					cout << "NOOOOOO\n";
+					//error(@$, "Missing float constant");
 				}
 			
 			
-parete_tk : PARETE f_const_ f_const_ f_const_ f_const_
+parete_tk : PARETE coord coord coord coord 
 			{
 				token_ * t = (token_ *)malloc(sizeof(token_*));
-				t->type = PARETE_;
-				//t->x1 = $<symbol>2->get_string();
-				
+				t->type = $<integerVal>1;
+				t->x1 = $<floatVal>2;
 				t->x2 = $<floatVal>3;
 				t->y1 = $<floatVal>4;
 				t->y2 = $<floatVal>5;
-				/*cout << "PARETEEEEEEEE " << " " << t->x1 << " " << t->y1 
-				<< " " << $<symbol>4->get_string() << " " << $<floatVal>5 << endl;*/
-				cout << "AZZ\n";
-				cout << $<floatVal>2 << endl;
-				$<element>$ = t;
+				//cout << "PARETE " << t->y2 << endl;
+				$<element>$ = t;				
 			}
 			
-			| PARETE error
-				{
-					cout << "CCCCCCC\n";
-				}
-
-
+			
+coord	: f_const_ 
+			{
+				$<floatVal>$ = normeAntisismiche_yylval.floatVal;
+				//cout << "FCONST " << $<floatVal>$ << endl;
+			}
 
 %% /*** Additional Code ***/
 

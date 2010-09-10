@@ -38,7 +38,7 @@
 
 
 /* Line 1067 of lalr1.cc  */
-#line 12 "normeantisismiche.yy"
+#line 21 "normeantisismiche.yy"
 namespace Earthquake {
 
 /* Line 1067 of lalr1.cc  */
@@ -130,7 +130,7 @@ namespace Earthquake {
   };
 
 /* Line 1153 of lalr1.cc  */
-#line 12 "normeantisismiche.yy"
+#line 21 "normeantisismiche.yy"
 } // Earthquake
 
 /* Line 1153 of lalr1.cc  */

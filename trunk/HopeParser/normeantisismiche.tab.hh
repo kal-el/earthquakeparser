@@ -39,24 +39,26 @@
 /* "%code requires" blocks.  */
 
 /* Line 35 of lalr1.cc  */
-#line 17 "normeantisismiche.yy"
+#line 26 "normeantisismiche.yy"
 
 	// Forward-declare the Scanner class; the Parser needs to be assigned a 
 	// Scanner, but the Scanner can't be declared without the Parser
 	namespace Earthquake {
-		class FlexScanner;
-		class Apertura;
-		class Aperture;
-		class Interpiano;
-		class Piani;
-		class Struttura;
+		 class FlexScanner;
+		 class Apertura;
+		 class Aperture;
+		 class Interpiano;
+		 class Piani;
+		 class Struttura;
+		 struct token_;
 	}
-	
+	class FloatEntry;
+	class Entry;
 
 
 
 /* Line 35 of lalr1.cc  */
-#line 60 "normeantisismiche.tab.hh"
+#line 62 "normeantisismiche.tab.hh"
 
 
 #include <string>
@@ -65,20 +67,20 @@
 
 
 /* Line 35 of lalr1.cc  */
-#line 12 "normeantisismiche.yy"
+#line 21 "normeantisismiche.yy"
 namespace Earthquake {
 
 /* Line 35 of lalr1.cc  */
-#line 73 "normeantisismiche.tab.hh"
+#line 75 "normeantisismiche.tab.hh"
   class position;
   class location;
 
 /* Line 35 of lalr1.cc  */
-#line 12 "normeantisismiche.yy"
+#line 21 "normeantisismiche.yy"
 } // Earthquake
 
 /* Line 35 of lalr1.cc  */
-#line 82 "normeantisismiche.tab.hh"
+#line 84 "normeantisismiche.tab.hh"
 
 #include "location.hh"
 
@@ -121,11 +123,11 @@ do {							\
 
 
 /* Line 35 of lalr1.cc  */
-#line 12 "normeantisismiche.yy"
+#line 21 "normeantisismiche.yy"
 namespace Earthquake {
 
 /* Line 35 of lalr1.cc  */
-#line 129 "normeantisismiche.tab.hh"
+#line 131 "normeantisismiche.tab.hh"
 
   /// A Bison parser.
   class BisonParser
@@ -137,23 +139,23 @@ namespace Earthquake {
     {
 
 /* Line 35 of lalr1.cc  */
-#line 39 "normeantisismiche.yy"
+#line 51 "normeantisismiche.yy"
 
-    int  			integerVal;
-    //double 			floatVal;
-    std::string*		stringVal;
-    float floatVal;
-    struct token_	*element;
-    Apertura	*apertura;
-	Interpiano *interpiano;
-	Piani		*piani;
-	Struttura *struttura;
-	Aperture	*ap;
+    int  				integerVal;
+    std::string			*stringVal;
+    float 				floatVal;
+    struct token_		*element;
+    Apertura			*open;
+	Interpiano 			*inter;
+	Piani				*floors;
+	Struttura 			*structure;
+	Aperture			*openings;
+	Entry				*symbol;
 
 
 
 /* Line 35 of lalr1.cc  */
-#line 157 "normeantisismiche.tab.hh"
+#line 159 "normeantisismiche.tab.hh"
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -173,6 +175,8 @@ namespace Earthquake {
      ARCHITRAVE = 65,
      f_const_ = 111,
      ERROR = 113,
+     SEMICOLON = 2,
+     SEPARATOR = 3,
      EOL = 258
    };
 
@@ -345,11 +349,11 @@ namespace Earthquake {
   };
 
 /* Line 35 of lalr1.cc  */
-#line 12 "normeantisismiche.yy"
+#line 21 "normeantisismiche.yy"
 } // Earthquake
 
 /* Line 35 of lalr1.cc  */
-#line 353 "normeantisismiche.tab.hh"
+#line 357 "normeantisismiche.tab.hh"
 
 
 

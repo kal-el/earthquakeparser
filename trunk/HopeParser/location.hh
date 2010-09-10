@@ -44,8 +44,13 @@
 # include "position.hh"
 
 
+<<<<<<< .mine
+/* Line 163 of location.cc  */
+#line 21 "normeantisismiche.yy"
+=======
 /* Line 162 of location.cc  */
 #line 21 "normeantisismiche.yy"
+>>>>>>> .r52
 namespace Earthquake {
 
 /* Line 162 of location.cc  */
@@ -159,8 +164,13 @@ namespace Earthquake {
   }
 
 
+<<<<<<< .mine
+/* Line 272 of location.cc  */
+#line 21 "normeantisismiche.yy"
+=======
 /* Line 271 of location.cc  */
 #line 21 "normeantisismiche.yy"
+>>>>>>> .r52
 } // Earthquake
 
 /* Line 271 of location.cc  */

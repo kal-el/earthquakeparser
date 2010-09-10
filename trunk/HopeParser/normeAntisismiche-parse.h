@@ -10,7 +10,7 @@
 #define _NORMEANTISISMICHE_H_
 
 #include "normeAntisismiche-io.h"
-#include "Struttura.h"
+//#include "Struttura.h"
 
 /* a type renaming */
 typedef int Boolean;
@@ -31,18 +31,28 @@ void dump_Symbol(ostream &,int,Symbol);
 #ifndef BISON_NORMEANTISISMICHE_TAB_H
 #define BISON_NORMEANTISISMICHE_TAB_H
 
+namespace Earthquake{
+	class Apertura;
+	class Aperture;
+	class Interpiano;
+	class Piani;
+	class Struttura;
+	struct token_;
+}
+
+
 #ifndef YYSTYPE
 typedef union
 {
 // qui vanno definiti i vari nodi dell'albero sintattico
-  Symbol 		symbol;
+  Symbol 					symbol;
   Earthquake::Apertura 		*apertura;
   Earthquake::Aperture 		*aperture;
   Earthquake::Interpiano 	*interpiano;
   Earthquake::Piani 		*piani;
   Earthquake::Struttura 	*struttura;
   Earthquake::token_ 		*token;
-  char 			*error_msg;
+  char			 			*error_msg;
 } yystype;
 # define YYSTYPE yystype
 # define YYSTYPE_IS_TRIVIAL 1

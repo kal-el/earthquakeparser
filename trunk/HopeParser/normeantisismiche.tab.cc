@@ -39,11 +39,20 @@
  /*** C/C++ Declarations ***/
 #include "Struttura.h"
 #include <stdio.h>
-#define ELEMENT $<element>
+#include "stringtab.h"
+
+# define	parete 		37
+# define	linea_piano 59
+# define	cordolo 	43
+# define	apertura 	44
+# define	architrave 	65
+# define	float_const 111
+# define	ERROR_CONST 103
+
 
 
 /* Line 311 of lalr1.cc  */
-#line 47 "normeantisismiche.tab.cc"
+#line 56 "normeantisismiche.tab.cc"
 
 
 #include "normeantisismiche.tab.hh"
@@ -51,26 +60,32 @@
 /* User implementation prologue.  */
 
 /* Line 317 of lalr1.cc  */
-#line 93 "normeantisismiche.yy"
+#line 104 "normeantisismiche.yy"
 
 
 
 
 /* Line 317 of lalr1.cc  */
-#line 61 "normeantisismiche.tab.cc"
+#line 70 "normeantisismiche.tab.cc"
 /* Unqualified %code blocks.  */
 
 /* Line 318 of lalr1.cc  */
-#line 31 "normeantisismiche.yy"
+#line 42 "normeantisismiche.yy"
 
 	// Prototype for the yylex function
 	static int yylex(Earthquake::BisonParser::semantic_type * yylval, Earthquake::FlexScanner &scanner);
 	
 
 
+/* Line 318 of lalr1.cc  */
+#line 64 "normeantisismiche.yy"
+
+extern Earthquake::BisonParser::semantic_type normeAntisismiche_yylval;
+
+
 
 /* Line 318 of lalr1.cc  */
-#line 74 "normeantisismiche.tab.cc"
+#line 89 "normeantisismiche.tab.cc"
 
 #ifndef YY_
 # if defined YYENABLE_NLS && YYENABLE_NLS
@@ -134,11 +149,11 @@ do {					\
 
 
 /* Line 380 of lalr1.cc  */
-#line 12 "normeantisismiche.yy"
+#line 21 "normeantisismiche.yy"
 namespace Earthquake {
 
 /* Line 380 of lalr1.cc  */
-#line 142 "normeantisismiche.tab.cc"
+#line 157 "normeantisismiche.tab.cc"
 #if YYERROR_VERBOSE
 
   /* Return YYSTR after stripping away unnecessary quotes and
@@ -241,29 +256,29 @@ namespace Earthquake {
         case 6: /* "APERTURA" */
 
 /* Line 480 of lalr1.cc  */
-#line 89 "normeantisismiche.yy"
-	{ delete (yyvaluep->apertura); };
+#line 100 "normeantisismiche.yy"
+	{ delete (yyvaluep->open); };
 
 /* Line 480 of lalr1.cc  */
-#line 249 "normeantisismiche.tab.cc"
+#line 264 "normeantisismiche.tab.cc"
 	break;
-      case 12: /* "struttura" */
+      case 14: /* "struttura" */
 
 /* Line 480 of lalr1.cc  */
-#line 89 "normeantisismiche.yy"
-	{ delete (yyvaluep->struttura); };
+#line 100 "normeantisismiche.yy"
+	{ delete (yyvaluep->structure); };
 
 /* Line 480 of lalr1.cc  */
-#line 258 "normeantisismiche.tab.cc"
+#line 273 "normeantisismiche.tab.cc"
 	break;
-      case 13: /* "piani" */
+      case 15: /* "piani" */
 
 /* Line 480 of lalr1.cc  */
-#line 89 "normeantisismiche.yy"
-	{ delete (yyvaluep->piani); };
+#line 100 "normeantisismiche.yy"
+	{ delete (yyvaluep->floors); };
 
 /* Line 480 of lalr1.cc  */
-#line 267 "normeantisismiche.tab.cc"
+#line 282 "normeantisismiche.tab.cc"
 	break;
 
 	default:
@@ -456,14 +471,13 @@ namespace Earthquake {
 	  case 2:
 
 /* Line 678 of lalr1.cc  */
-#line 104 "normeantisismiche.yy"
+#line 115 "normeantisismiche.yy"
     {
-           cout << "STRUTTURAAAAAAHHHHH\n\n";
-		   //Struttura's contructor checks the <contains, not intersect> property
-	       (yyval.struttura) = new Struttura(*((yysemantic_stack_[(2) - (1)].piani)), ((yysemantic_stack_[(2) - (2)].ap))->getList());
-		   list<token_*> maschi = (yyval.struttura)->calcolaMaschi();
+           //Struttura's contructor checks the <contains, not intersect> property
+	       (yyval.structure) = new Struttura(*((yysemantic_stack_[(2) - (1)].floors)), ((yysemantic_stack_[(2) - (2)].openings))->getList());
+		   list<token_*> maschi = (yyval.structure)->calcolaMaschi();
 		   try{
-				(yyval.struttura)->verificaProprietaMaschio(maschi);
+				(yyval.structure)->verificaProprietaMaschio(maschi);
 		   }
 		   catch(PropertyViolationException *ex) {
 				cout << "I maschi non rispettano le proprieta \n";
@@ -474,91 +488,83 @@ namespace Earthquake {
   case 3:
 
 /* Line 678 of lalr1.cc  */
-#line 120 "normeantisismiche.yy"
+#line 130 "normeantisismiche.yy"
     {
-           		printf("INTERPIANI %d %f %f %f %f",(yysemantic_stack_[(2) - (2)].element)->type,(yysemantic_stack_[(2) - (2)].element)->x1,
-           			(yysemantic_stack_[(2) - (2)].element)->y1,(yysemantic_stack_[(2) - (2)].element)->x2,(yysemantic_stack_[(2) - (2)].element)->y2);
-				list<Interpiano> interpianiList = (yysemantic_stack_[(2) - (1)].piani)->getInterpiani();
-				interpianiList.push_back(*((yysemantic_stack_[(2) - (2)].interpiano)));
-				(yyval.piani) = new Piani(interpianiList, (yysemantic_stack_[(2) - (1)].piani)->getParete());
+           		list<Interpiano> interpianiList = (yysemantic_stack_[(2) - (1)].floors)->getInterpiani();
+				interpianiList.push_back(*((yysemantic_stack_[(2) - (2)].inter)));
+				(yyval.floors) = new Piani(interpianiList, (yysemantic_stack_[(2) - (1)].floors)->getParete());
 	       }
     break;
 
   case 4:
 
 /* Line 678 of lalr1.cc  */
-#line 129 "normeantisismiche.yy"
+#line 137 "normeantisismiche.yy"
     {
-			printf("PIANI_pr2: %d %.1f %f %f %f",(yysemantic_stack_[(1) - (1)].element)->type,
-				(yysemantic_stack_[(1) - (1)].element)->x1,(yysemantic_stack_[(1) - (1)].element)->y1,(yysemantic_stack_[(1) - (1)].element)->x2,
-			(yysemantic_stack_[(1) - (1)].element)->y2);
-				(yyval.piani) = new Piani((yysemantic_stack_[(1) - (1)].element));
+				(yyval.floors) = new Piani((yysemantic_stack_[(1) - (1)].element));
 			}
     break;
 
   case 5:
 
 /* Line 678 of lalr1.cc  */
-#line 139 "normeantisismiche.yy"
+#line 144 "normeantisismiche.yy"
     {
 				cout << "INTERPIANI_pr1: " << (yysemantic_stack_[(2) - (1)].element)->type << " || " << (yysemantic_stack_[(2) - (1)].element)->x1 << " || " << (yysemantic_stack_[(2) - (1)].element)->y1 << (yysemantic_stack_[(2) - (2)].element)->x2 << " || " << (yysemantic_stack_[(2) - (1)].element)->y2
 					<< "\n-" << (yysemantic_stack_[(2) - (2)].element)->type << " || " << (yysemantic_stack_[(2) - (2)].element)->x1 << " || " << (yysemantic_stack_[(2) - (2)].element)->y1 << (yysemantic_stack_[(2) - (2)].element)->x2 << " || " << (yysemantic_stack_[(2) - (2)].element)->y2 << "\n\n";
 
-					(yyval.interpiano) = new Interpiano((yysemantic_stack_[(2) - (1)].element), (yysemantic_stack_[(2) - (2)].element));
+					(yyval.inter) = new Interpiano((yysemantic_stack_[(2) - (1)].element), (yysemantic_stack_[(2) - (2)].element));
 				}
     break;
 
   case 6:
 
 /* Line 678 of lalr1.cc  */
-#line 146 "normeantisismiche.yy"
+#line 151 "normeantisismiche.yy"
     {
-				cout << "INTERPIANI_pr2: " << (yysemantic_stack_[(1) - (1)].element)->type << " || " << (yysemantic_stack_[(1) - (1)].element)->x1 << " || " << (yysemantic_stack_[(1) - (1)].element)->y1 << (yysemantic_stack_[(1) - (1)].element)->x2 << " || " << (yysemantic_stack_[(1) - (1)].element)->y2 <<"\n\n";
-				
-					(yyval.interpiano) = new Interpiano((yysemantic_stack_[(1) - (1)].element));
+					//cout << "INTERPIANI_pr2: " << $<element>1->type << " || " << $<element>1->x1 << " || " << $<element>1->y1 << $<element>1->x2 << " || " << $<element>1->y2 <<"\n\n";
+					(yyval.inter) = new Interpiano((yysemantic_stack_[(1) - (1)].element));
 				}
     break;
 
   case 7:
 
 /* Line 678 of lalr1.cc  */
-#line 155 "normeantisismiche.yy"
+#line 159 "normeantisismiche.yy"
     {
 				cout << "APERTURA_pr1: " << (yysemantic_stack_[(2) - (2)].element)->type << " || " << (yysemantic_stack_[(2) - (2)].element)->x1 << " || " << (yysemantic_stack_[(2) - (2)].element)->y1 << (yysemantic_stack_[(2) - (2)].element)->x2 << " || " << (yysemantic_stack_[(2) - (2)].element)->y2 <<"\n\n";
 				
-					((yysemantic_stack_[(2) - (1)].ap))->getList().push_back(*((yysemantic_stack_[(2) - (2)].apertura)));
-					(yyval.ap) = (yysemantic_stack_[(2) - (1)].ap);
+					((yysemantic_stack_[(2) - (1)].openings))->getList().push_back(*((yysemantic_stack_[(2) - (2)].open)));
+					(yyval.openings) = (yysemantic_stack_[(2) - (1)].openings);
 				}
     break;
 
   case 8:
 
 /* Line 678 of lalr1.cc  */
-#line 162 "normeantisismiche.yy"
+#line 166 "normeantisismiche.yy"
     {
-				cout << "APERTURA_pr2: " << (yysemantic_stack_[(1) - (1)].element)->type << " || " << (yysemantic_stack_[(1) - (1)].element)->x1 << " || " << (yysemantic_stack_[(1) - (1)].element)->y1 << " || " << (yysemantic_stack_[(1) - (1)].element)->x2 << " || " << (yysemantic_stack_[(1) - (1)].element)->y2 << "\n\n";
-				
 					list<Apertura> apertureList;
-					apertureList.push_back(*((yysemantic_stack_[(1) - (1)].apertura)));
-					(yyval.ap) = new Aperture(apertureList);
+					apertureList.push_back(*((yysemantic_stack_[(1) - (1)].open)));
+					(yyval.openings) = new Aperture(apertureList);
 				}
     break;
 
   case 9:
 
 /* Line 678 of lalr1.cc  */
-#line 173 "normeantisismiche.yy"
+#line 175 "normeantisismiche.yy"
     {
-			cout << "APERTURA_PR: " << (yysemantic_stack_[(2) - (1)].element)->type << " || " << (yysemantic_stack_[(2) - (1)].element)->x1 << " || " << (yysemantic_stack_[(2) - (1)].element)->y1 << " || " << (yysemantic_stack_[(2) - (1)].element)->x2 << " || " << (yysemantic_stack_[(2) - (1)].element)->y2 
-				<< "\n-" << (yysemantic_stack_[(2) - (2)].element)->type << " || " << (yysemantic_stack_[(2) - (2)].element)->x1 << " || " << (yysemantic_stack_[(2) - (2)].element)->y1 << (yysemantic_stack_[(2) - (2)].element)->x2 << " || " << (yysemantic_stack_[(2) - (2)].element)->y2 <<"\n\n";
-				(yyval.apertura) = new Apertura((yysemantic_stack_[(2) - (1)].element), (yysemantic_stack_[(2) - (2)].element));
+			/*cout << "APERTURA_PR: " << $<element>1->type << " || " << $<element>1->x1 << " || " << $<element>1->y1 << " || " << $<element>1->x2 << " || " << $<element>1->y2 
+				<< "\n-" << $<element>2->type << " || " << $<element>2->x1 << " || " << $<element>2->y1 << $<element>2->x2 << " || " << $<element>2->y2 <<"\n\n";*/
+				(yyval.open) = new Apertura((yysemantic_stack_[(2) - (1)].element), (yysemantic_stack_[(2) - (2)].element));
 			}
     break;
 
   case 10:
 
 /* Line 678 of lalr1.cc  */
-#line 181 "normeantisismiche.yy"
+#line 183 "normeantisismiche.yy"
     {
 			cout << "APERTURA: " << APERTURA_ << ": " << (yysemantic_stack_[(5) - (2)].floatVal) << " || " << (yysemantic_stack_[(5) - (3)].floatVal) << " || " << (yysemantic_stack_[(5) - (4)].floatVal) << " || " << (yysemantic_stack_[(5) - (5)].floatVal) << "\n\n";
 				token_ * t = (token_ *)malloc(sizeof(token_*));
@@ -574,7 +580,7 @@ namespace Earthquake {
   case 11:
 
 /* Line 678 of lalr1.cc  */
-#line 193 "normeantisismiche.yy"
+#line 195 "normeantisismiche.yy"
     {
 					//error(@$, "che palleeee\n");
 					cout << "NOOOOOO\n";
@@ -584,7 +590,7 @@ namespace Earthquake {
   case 12:
 
 /* Line 678 of lalr1.cc  */
-#line 198 "normeantisismiche.yy"
+#line 200 "normeantisismiche.yy"
     {
 					//error(@$, "che palleeee\n");
 					cout << "NOOOOOO\n";
@@ -594,7 +600,7 @@ namespace Earthquake {
   case 13:
 
 /* Line 678 of lalr1.cc  */
-#line 205 "normeantisismiche.yy"
+#line 207 "normeantisismiche.yy"
     {
 			cout << "ARCHITRAVE: " << ARCHITRAVE_ << ": " << (yysemantic_stack_[(5) - (2)].floatVal) << " || " << (yysemantic_stack_[(5) - (3)].floatVal) << " || " << (yysemantic_stack_[(5) - (4)].floatVal) << " || " << (yysemantic_stack_[(5) - (5)].floatVal) << "\n\n";
 			
@@ -611,7 +617,7 @@ namespace Earthquake {
   case 14:
 
 /* Line 678 of lalr1.cc  */
-#line 218 "normeantisismiche.yy"
+#line 220 "normeantisismiche.yy"
     {
 					//error(@$, "che palleeee\n");
 					cout << "NOOOOOO\n";
@@ -621,7 +627,7 @@ namespace Earthquake {
   case 15:
 
 /* Line 678 of lalr1.cc  */
-#line 225 "normeantisismiche.yy"
+#line 227 "normeantisismiche.yy"
     {
 			cout << "LINEAPIANO: " << ": " << (yysemantic_stack_[(5) - (2)].floatVal) << " || " << (yysemantic_stack_[(5) - (3)].floatVal) << " || " << (yysemantic_stack_[(5) - (4)].floatVal) << " || " << (yysemantic_stack_[(5) - (5)].floatVal) << "\n\n";
 			
@@ -638,7 +644,7 @@ namespace Earthquake {
   case 16:
 
 /* Line 678 of lalr1.cc  */
-#line 238 "normeantisismiche.yy"
+#line 240 "normeantisismiche.yy"
     {
 					//error(@$, "che palleeee\n");
 					cout << "NOOOOOO\n";
@@ -648,7 +654,7 @@ namespace Earthquake {
   case 17:
 
 /* Line 678 of lalr1.cc  */
-#line 245 "normeantisismiche.yy"
+#line 247 "normeantisismiche.yy"
     {
 			//cout << "CORDOLO: " << CORDOLO_ << ": " << $<floatVal>2 << " || " << $<floatVal>3 << " || " << $<floatVal>4 << " || " << $<floatVal>5 << "\n\n";
 				token_ * t = (token_ *)malloc(sizeof(token_*));
@@ -664,43 +670,42 @@ namespace Earthquake {
   case 18:
 
 /* Line 678 of lalr1.cc  */
-#line 257 "normeantisismiche.yy"
+#line 259 "normeantisismiche.yy"
     {
-					//error(@$, "che palleeee\n");
-					cout << "NOOOOOO\n";
+					//error(@$, "Missing float constant");
 				}
     break;
 
   case 19:
 
 /* Line 678 of lalr1.cc  */
-#line 264 "normeantisismiche.yy"
+#line 265 "normeantisismiche.yy"
     {
 				token_ * t = (token_ *)malloc(sizeof(token_*));
-				t->type = PARETE_;
+				t->type = (yysemantic_stack_[(5) - (1)].integerVal);
 				t->x1 = (yysemantic_stack_[(5) - (2)].floatVal);
 				t->x2 = (yysemantic_stack_[(5) - (3)].floatVal);
 				t->y1 = (yysemantic_stack_[(5) - (4)].floatVal);
 				t->y2 = (yysemantic_stack_[(5) - (5)].floatVal);
-				cout << "PARETEEEEEEEE " << " %.2f" << t->x1 << " " << t->y1 
-				<< " " << (yysemantic_stack_[(5) - (4)].floatVal) << " " << (yysemantic_stack_[(5) - (5)].floatVal) << endl;
-				(yyval.element) = t;
+				//cout << "PARETE " << t->y2 << endl;
+				(yyval.element) = t;				
 			}
     break;
 
   case 20:
 
 /* Line 678 of lalr1.cc  */
-#line 277 "normeantisismiche.yy"
+#line 278 "normeantisismiche.yy"
     {
-					cout << "CCCCCCC\n";
-				}
+				(yyval.floatVal) = normeAntisismiche_yylval.floatVal;
+				//cout << "FCONST " << $<floatVal>$ << endl;
+			}
     break;
 
 
 
 /* Line 678 of lalr1.cc  */
-#line 704 "normeantisismiche.tab.cc"
+#line 709 "normeantisismiche.tab.cc"
 	default:
           break;
       }
@@ -905,15 +910,15 @@ namespace Earthquake {
 
   /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
      STATE-NUM.  */
-  const signed char BisonParser::yypact_ninf_ = -3;
+  const signed char BisonParser::yypact_ninf_ = -7;
   const signed char
   BisonParser::yypact_[] =
   {
-        17,    -1,     5,    13,    -3,    -3,    -2,    -3,     7,     0,
-       1,    -3,    12,    -3,     9,    16,    14,    15,    -3,    18,
-      -3,    19,    -3,     2,    -3,     3,    -3,    20,    21,    22,
-      23,    -3,    24,    -3,    25,    -3,    26,    27,    28,    29,
-      30,    -3,    -3,    -3,    31,    32,    -3,    -3
+        19,    -5,     6,    14,    -7,    -7,    -5,    -7,    -1,     0,
+       1,    -7,    13,    -7,     9,    12,    -5,    15,    -7,    16,
+      -7,    17,    -7,     3,    -7,     4,    -7,    -5,    18,    20,
+      21,    -7,    22,    -7,    23,    -7,    24,    25,    26,    27,
+      28,    -7,    -7,    -7,    29,    30,    -7,    -7
   };
 
   /* YYDEFACT[S] -- default rule to reduce with in state S when YYTABLE
@@ -933,8 +938,8 @@ namespace Earthquake {
   const signed char
   BisonParser::yypgoto_[] =
   {
-        -3,    -3,    -3,    -3,    -3,    33,    -3,    -3,    -3,    -3,
-      -3
+        -7,    -7,    -7,    -7,    -7,    31,    -7,    -7,    -7,    -7,
+      -7,    -6
   };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -942,7 +947,7 @@ namespace Earthquake {
   BisonParser::yydefgoto_[] =
   {
         -1,     2,     3,    11,    12,    13,    14,    24,    15,    26,
-       4
+       4,     6
   };
 
   /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -952,22 +957,22 @@ namespace Earthquake {
   const signed char
   BisonParser::yytable_[] =
   {
-         5,    18,    20,    31,    33,     7,    16,     6,    19,    21,
-      32,    34,    -2,     8,     8,    17,    23,     9,    10,    10,
-       1,    25,    27,    28,     0,     0,    29,    30,    35,    36,
-      37,    38,    39,    40,    41,    42,    43,    44,    45,    46,
-      47,     0,     0,     0,     0,    22
+        16,    18,    20,     5,    31,    33,     7,    17,    19,    21,
+      27,    32,    34,    -2,     8,     8,    23,    25,     9,    10,
+      10,    35,     1,    28,    29,    30,    36,     0,    37,    38,
+      39,    40,    41,    42,    43,    44,    45,    46,    47,     0,
+       0,     0,     0,    22
   };
 
   /* YYCHECK.  */
   const signed char
   BisonParser::yycheck_[] =
   {
-         1,     1,     1,     1,     1,     0,     8,     8,     8,     8,
-       8,     8,     0,     1,     1,     8,     7,     4,     6,     6,
-       3,     5,     8,     8,    -1,    -1,     8,     8,     8,     8,
-       8,     8,     8,     8,     8,     8,     8,     8,     8,     8,
-       8,    -1,    -1,    -1,    -1,    12
+         6,     1,     1,     8,     1,     1,     0,     8,     8,     8,
+      16,     8,     8,     0,     1,     1,     7,     5,     4,     6,
+       6,    27,     3,     8,     8,     8,     8,    -1,     8,     8,
+       8,     8,     8,     8,     8,     8,     8,     8,     8,    -1,
+      -1,    -1,    -1,    12
   };
 
   /* STOS_[STATE-NUM] -- The (internal number of the) accessing
@@ -975,10 +980,10 @@ namespace Earthquake {
   const unsigned char
   BisonParser::yystos_[] =
   {
-         0,     3,    12,    13,    21,     1,     8,     0,     1,     4,
-       6,    14,    15,    16,    17,    19,     8,     8,     1,     8,
-       1,     8,    16,     7,    18,     5,    20,     8,     8,     8,
-       8,     1,     8,     1,     8,     8,     8,     8,     8,     8,
+         0,     3,    14,    15,    23,     8,    24,     0,     1,     4,
+       6,    16,    17,    18,    19,    21,    24,     8,     1,     8,
+       1,     8,    18,     7,    20,     5,    22,    24,     8,     8,
+       8,     1,     8,     1,     8,    24,     8,     8,     8,     8,
        8,     8,     8,     8,     8,     8,     8,     8
   };
 
@@ -989,7 +994,7 @@ namespace Earthquake {
   BisonParser::yytoken_number_[] =
   {
          0,   256,   257,    37,    59,    43,    44,    65,   111,   113,
-     258
+       2,     3,   258
   };
 #endif
 
@@ -997,9 +1002,9 @@ namespace Earthquake {
   const unsigned char
   BisonParser::yyr1_[] =
   {
-         0,    11,    12,    13,    13,    14,    14,    15,    15,    16,
-      17,    17,    17,    18,    18,    19,    19,    20,    20,    21,
-      21
+         0,    13,    14,    15,    15,    16,    16,    17,    17,    18,
+      19,    19,    19,    20,    20,    21,    21,    22,    22,    23,
+      24
   };
 
   /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
@@ -1008,7 +1013,7 @@ namespace Earthquake {
   {
          0,     2,     2,     2,     1,     2,     1,     2,     1,     2,
        5,     2,     5,     5,     2,     5,     2,     5,     2,     5,
-       2
+       1
   };
 
 #if YYDEBUG || YYERROR_VERBOSE || YYTOKEN_TABLE
@@ -1018,10 +1023,10 @@ namespace Earthquake {
   const BisonParser::yytname_[] =
   {
     "\"end of file\"", "error", "$undefined", "PARETE", "LINEAPIANO",
-  "CORDOLO", "APERTURA", "ARCHITRAVE", "f_const_", "ERROR",
-  "\"end of line\"", "$accept", "struttura", "piani", "interpiani",
-  "aperture", "apertura_pr", "apertura_tk", "architrave_tk",
-  "lineapiano_tk", "cordolo_tk", "parete_tk", 0
+  "CORDOLO", "APERTURA", "ARCHITRAVE", "f_const_", "ERROR", "SEMICOLON",
+  "SEPARATOR", "\"end of line\"", "$accept", "struttura", "piani",
+  "interpiani", "aperture", "apertura_pr", "apertura_tk", "architrave_tk",
+  "lineapiano_tk", "cordolo_tk", "parete_tk", "coord", 0
   };
 #endif
 
@@ -1030,14 +1035,14 @@ namespace Earthquake {
   const BisonParser::rhs_number_type
   BisonParser::yyrhs_[] =
   {
-        12,     0,    -1,    13,    15,    -1,    13,    14,    -1,    21,
-      -1,    19,    20,    -1,    19,    -1,    15,    16,    -1,    16,
-      -1,    17,    18,    -1,     6,     8,     8,     8,     8,    -1,
+        14,     0,    -1,    15,    17,    -1,    15,    16,    -1,    23,
+      -1,    21,    22,    -1,    21,    -1,    17,    18,    -1,    18,
+      -1,    19,    20,    -1,     6,     8,     8,     8,     8,    -1,
        6,     1,    -1,     1,     8,     8,     8,     8,    -1,     7,
        8,     8,     8,     8,    -1,     7,     1,    -1,     4,     8,
        8,     8,     8,    -1,     4,     1,    -1,     5,     8,     8,
-       8,     8,    -1,     5,     1,    -1,     3,     8,     8,     8,
-       8,    -1,     3,     1,    -1
+       8,     8,    -1,     5,     1,    -1,     3,    24,    24,    24,
+      24,    -1,     8,    -1
   };
 
   /* YYPRHS[YYN] -- Index of the first RHS symbol of rule number YYN in
@@ -1054,9 +1059,9 @@ namespace Earthquake {
   const unsigned short int
   BisonParser::yyrline_[] =
   {
-         0,   103,   103,   119,   128,   138,   145,   154,   161,   172,
-     180,   192,   197,   204,   217,   224,   237,   244,   256,   263,
-     276
+         0,   114,   114,   129,   136,   143,   150,   158,   165,   174,
+     182,   194,   199,   206,   219,   226,   239,   246,   258,   264,
+     277
   };
 
   // Print the state stack on the debug stream.
@@ -1096,7 +1101,7 @@ namespace Earthquake {
     const token_number_type
     translate_table[] =
     {
-           0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+           0,     2,    10,    11,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     3,     2,     2,
@@ -1121,7 +1126,7 @@ namespace Earthquake {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     1,     2,    10
+       2,     2,     2,     2,     2,     2,     1,     2,    12
     };
     if ((unsigned int) t <= yyuser_token_number_max_)
       return translate_table[t];
@@ -1130,24 +1135,24 @@ namespace Earthquake {
   }
 
   const int BisonParser::yyeof_ = 0;
-  const int BisonParser::yylast_ = 45;
-  const int BisonParser::yynnts_ = 11;
+  const int BisonParser::yylast_ = 43;
+  const int BisonParser::yynnts_ = 12;
   const int BisonParser::yyempty_ = -2;
   const int BisonParser::yyfinal_ = 7;
   const int BisonParser::yyterror_ = 1;
   const int BisonParser::yyerrcode_ = 256;
-  const int BisonParser::yyntokens_ = 11;
+  const int BisonParser::yyntokens_ = 13;
 
   const unsigned int BisonParser::yyuser_token_number_max_ = 258;
   const BisonParser::token_number_type BisonParser::yyundef_token_ = 2;
 
 
 /* Line 1054 of lalr1.cc  */
-#line 12 "normeantisismiche.yy"
+#line 21 "normeantisismiche.yy"
 } // Earthquake
 
 /* Line 1054 of lalr1.cc  */
-#line 1151 "normeantisismiche.tab.cc"
+#line 1156 "normeantisismiche.tab.cc"
 
 
 /* Line 1056 of lalr1.cc  */

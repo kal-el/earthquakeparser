@@ -57,6 +57,7 @@ typedef int flex_int32_t;
 typedef unsigned char flex_uint8_t; 
 typedef unsigned short int flex_uint16_t;
 typedef unsigned int flex_uint32_t;
+#endif /* ! C99 */
 
 /* Limits of integral types. */
 #ifndef INT8_MIN
@@ -87,15 +88,13 @@ typedef unsigned int flex_uint32_t;
 #define UINT32_MAX             (4294967295U)
 #endif
 
-#endif /* ! C99 */
-
 #endif /* ! FLEXINT_H */
 
 /* begin standard C++ headers. */
 #include <iostream> 
 #include <errno.h>
-#include <cstdlib>
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 /* end standard C++ headers. */
 
@@ -153,15 +152,7 @@ typedef unsigned int flex_uint32_t;
 
 /* Size of default input buffer. */
 #ifndef YY_BUF_SIZE
-#ifdef __ia64__
-/* On IA-64, the buffer size is 16k, not 8k.
- * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
- * Ditto for the __ia64__ case accordingly.
- */
-#define YY_BUF_SIZE 32768
-#else
 #define YY_BUF_SIZE 16384
-#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -520,7 +511,8 @@ static yyconst flex_int16_t yy_chk[180] =
 # define	architrave 	65
 # define	float_const 111
 # define	ERROR_CONST 103
-
+# define 	SEMICOLON	2
+# define 	SEPARATOR 	3
 /* Max size of string constants */
 #define MAX_STR_CONST 1025
 #define YY_NO_UNPUT   /* keep g++ happy */
@@ -549,7 +541,7 @@ int prevstate;
 /* altre eventuali inizializzazioni vanno qui*/ 
 
 
-#line 553 "lex.yy.cc"
+#line 545 "lex.yy.cc"
 
 #define INITIAL 0
 #define INTERPIANO 1
@@ -587,12 +579,7 @@ static int yy_flex_strlen (yyconst char * );
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
-#ifdef __ia64__
-/* On IA-64, the buffer size is 16k, not 8k */
-#define YY_READ_BUF_SIZE 16384
-#else
 #define YY_READ_BUF_SIZE 8192
-#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -662,7 +649,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 61 "norme.flex"
+#line 62 "norme.flex"
 
 
 
@@ -673,7 +660,7 @@ YY_DECL
 
 
 
-#line 677 "lex.yy.cc"
+#line 664 "lex.yy.cc"
 
 	if ( !(yy_init) )
 		{
@@ -758,7 +745,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 71 "norme.flex"
+#line 72 "norme.flex"
 {
 	if(!begin) {
 		printf("L'elemento iniziale deve essere \"struttura\"!!");	
@@ -771,7 +758,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 81 "norme.flex"
+#line 82 "norme.flex"
 {
 	prevstate = INITIAL;
 	BEGIN(PARETE);
@@ -780,7 +767,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 88 "norme.flex"
+#line 89 "norme.flex"
 {
 	//FloatEntry *fe = floattable.add_string(yytext,yyleng);
 	FloatEntry *fe = floattable.add_float(atof(yytext));
@@ -789,7 +776,6 @@ YY_RULE_SETUP
 	
 	normeAntisismiche_yylval.floatVal = atof(fe->str);
 	//yytext[yyleng-1]='\0';
-	cout << "AAAAA - " << normeAntisismiche_yylval.floatVal << endl;
 	return(float_const);
 }
 	YY_BREAK
@@ -797,19 +783,20 @@ case 4:
 YY_RULE_SETUP
 #line 100 "norme.flex"
 {
-	
+	//return(SEMICOLON);
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 104 "norme.flex"
 {
-	BEGIN(prevstate);		
+	BEGIN(prevstate);
+	//return(SEPARATOR);		
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 109 "norme.flex"
+#line 110 "norme.flex"
 {
 	prevstate = INITIAL;
 	BEGIN(INTERPIANO);
@@ -817,7 +804,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 114 "norme.flex"
+#line 115 "norme.flex"
 {
 	prevstate = INTERPIANO;
 	BEGIN(LINEAPIANO);
@@ -826,7 +813,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 120 "norme.flex"
+#line 121 "norme.flex"
 {
 	prevstate = INTERPIANO;
 	BEGIN(CORDOLO);
@@ -835,7 +822,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 126 "norme.flex"
+#line 127 "norme.flex"
 {
 	BEGIN(INITIAL);
 
@@ -843,14 +830,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 131 "norme.flex"
+#line 132 "norme.flex"
 {
 	BEGIN(APERTURE);
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 135 "norme.flex"
+#line 136 "norme.flex"
 {
 	prevstate = APERTURE;
 	BEGIN(APERTURA);
@@ -859,7 +846,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 141 "norme.flex"
+#line 142 "norme.flex"
 {
 	prevstate = APERTURE;
 	BEGIN(ARCHITRAVE);
@@ -868,7 +855,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 147 "norme.flex"
+#line 148 "norme.flex"
 {
 	BEGIN(INITIAL);
 }
@@ -876,14 +863,14 @@ YY_RULE_SETUP
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 151 "norme.flex"
+#line 152 "norme.flex"
 {
 	curr_lineno++;
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 155 "norme.flex"
+#line 156 "norme.flex"
 {
 	printf("Lessema non riconosciuto: %s", yytext);
 	return(ERROR);
@@ -891,10 +878,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 163 "norme.flex"
+#line 164 "norme.flex"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 898 "lex.yy.cc"
+#line 885 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(INTERPIANO):
 case YY_STATE_EOF(APERTURE):
@@ -1802,7 +1789,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 163 "norme.flex"
+#line 164 "norme.flex"
 
 
 

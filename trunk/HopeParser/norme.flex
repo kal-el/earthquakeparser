@@ -23,7 +23,8 @@
 # define	architrave 	65
 # define	float_const 111
 # define	ERROR_CONST 103
-
+# define 	SEMICOLON	2
+# define 	SEPARATOR 	3
 /* Max size of string constants */
 #define MAX_STR_CONST 1025
 #define YY_NO_UNPUT   /* keep g++ happy */
@@ -93,16 +94,16 @@ floatingp    {num}"."{num}
 	
 	normeAntisismiche_yylval.floatVal = atof(fe->str);
 	//yytext[yyleng-1]='\0';
-	cout << "AAAAA - " << normeAntisismiche_yylval.floatVal << endl;
 	return(float_const);
 }
 
 <PARETE,LINEAPIANO,APERTURA,ARCHITRAVE,CORDOLO>";" {
-	
+	//return(SEMICOLON);
 }
 
 <PARETE,LINEAPIANO,APERTURA,ARCHITRAVE,CORDOLO>"$$$" {
-	BEGIN(prevstate);		
+	BEGIN(prevstate);
+	//return(SEPARATOR);		
 }
 
 
