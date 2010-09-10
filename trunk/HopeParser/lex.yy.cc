@@ -542,7 +542,7 @@ char *string_buf_ptr;
 
 extern int curr_lineno;
 extern int verbose_flag;
-extern YYSTYPE normeAntisismiche_yylval;
+extern Earthquake::BisonParser::semantic_type normeAntisismiche_yylval;
 int begin = 1;
 int prevstate;
 
@@ -782,30 +782,34 @@ case 3:
 YY_RULE_SETUP
 #line 88 "norme.flex"
 {
-	//normeAntisismiche_yylval.symbol = floattable.add_float(atof(yytext));
-	normeAntisismiche_yylval.symbol = floattable.add_string(yytext,yyleng-1);
+	//FloatEntry *fe = floattable.add_string(yytext,yyleng);
+	FloatEntry *fe = floattable.add_float(atof(yytext));
+	//std::string st = fe->str;
+	//normeAntisismiche_yylval.stringVal = new std::string(st);
+	
+	normeAntisismiche_yylval.floatVal = atof(fe->str);
 	//yytext[yyleng-1]='\0';
-	//printf("LEEEEEEXEEEEER %s\n", yytext);		
+	cout << "AAAAA - " << normeAntisismiche_yylval.floatVal << endl;
 	return(float_const);
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 96 "norme.flex"
+#line 100 "norme.flex"
 {
 	
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 100 "norme.flex"
+#line 104 "norme.flex"
 {
 	BEGIN(prevstate);		
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 105 "norme.flex"
+#line 109 "norme.flex"
 {
 	prevstate = INITIAL;
 	BEGIN(INTERPIANO);
@@ -813,7 +817,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 110 "norme.flex"
+#line 114 "norme.flex"
 {
 	prevstate = INTERPIANO;
 	BEGIN(LINEAPIANO);
@@ -822,7 +826,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 116 "norme.flex"
+#line 120 "norme.flex"
 {
 	prevstate = INTERPIANO;
 	BEGIN(CORDOLO);
@@ -831,7 +835,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 122 "norme.flex"
+#line 126 "norme.flex"
 {
 	BEGIN(INITIAL);
 
@@ -839,14 +843,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 127 "norme.flex"
+#line 131 "norme.flex"
 {
 	BEGIN(APERTURE);
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 131 "norme.flex"
+#line 135 "norme.flex"
 {
 	prevstate = APERTURE;
 	BEGIN(APERTURA);
@@ -855,7 +859,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 137 "norme.flex"
+#line 141 "norme.flex"
 {
 	prevstate = APERTURE;
 	BEGIN(ARCHITRAVE);
@@ -864,7 +868,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 143 "norme.flex"
+#line 147 "norme.flex"
 {
 	BEGIN(INITIAL);
 }
@@ -872,14 +876,14 @@ YY_RULE_SETUP
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 147 "norme.flex"
+#line 151 "norme.flex"
 {
 	curr_lineno++;
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 151 "norme.flex"
+#line 155 "norme.flex"
 {
 	printf("Lessema non riconosciuto: %s", yytext);
 	return(ERROR);
@@ -887,10 +891,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 159 "norme.flex"
+#line 163 "norme.flex"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 894 "lex.yy.cc"
+#line 898 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(INTERPIANO):
 case YY_STATE_EOF(APERTURE):
@@ -1798,7 +1802,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 159 "norme.flex"
+#line 163 "norme.flex"
 
 
 

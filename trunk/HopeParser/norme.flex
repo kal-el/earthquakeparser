@@ -45,7 +45,7 @@ char *string_buf_ptr;
 
 extern int curr_lineno;
 extern int verbose_flag;
-extern YYSTYPE normeAntisismiche_yylval;
+extern Earthquake::BisonParser::semantic_type normeAntisismiche_yylval;
 int begin = 1;
 int prevstate;
 
@@ -86,10 +86,14 @@ floatingp    {num}"."{num}
 
 
 <PARETE,LINEAPIANO,APERTURA,ARCHITRAVE,CORDOLO>[0-9]+("."[0-9]+)? {
-	//normeAntisismiche_yylval.symbol = floattable.add_float(atof(yytext));
-	normeAntisismiche_yylval.symbol = floattable.add_string(yytext,yyleng-1);
+	//FloatEntry *fe = floattable.add_string(yytext,yyleng);
+	FloatEntry *fe = floattable.add_float(atof(yytext));
+	//std::string st = fe->str;
+	//normeAntisismiche_yylval.stringVal = new std::string(st);
+	
+	normeAntisismiche_yylval.floatVal = atof(fe->str);
 	//yytext[yyleng-1]='\0';
-	//printf("LEEEEEEXEEEEER %s\n", yytext);		
+	cout << "AAAAA - " << normeAntisismiche_yylval.floatVal << endl;
 	return(float_const);
 }
 

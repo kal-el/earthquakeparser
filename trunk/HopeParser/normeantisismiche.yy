@@ -50,7 +50,7 @@
 
 %union {
     int  				integerVal;
-    std::string*		stringVal;
+    std::string			*stringVal;
     float 				floatVal;
     struct token_		*element;
     Apertura			*open;
@@ -58,8 +58,12 @@
 	Piani				*floors;
 	Struttura 			*structure;
 	Aperture			*openings;
-	Entry				*entry;
+	Entry				*symbol;
 };
+
+%code {
+extern Earthquake::BisonParser::semantic_type normeAntisismiche_yylval;
+}
 
 //Token List
 //if we need it, we can use %token TOKEN "blabla" to see blabla as a literal token (not yacc compatible)
@@ -278,7 +282,7 @@ parete_tk : PARETE f_const_ f_const_ f_const_ f_const_
 				/*cout << "PARETEEEEEEEE " << " " << t->x1 << " " << t->y1 
 				<< " " << $<symbol>4->get_string() << " " << $<floatVal>5 << endl;*/
 				cout << "AZZ\n";
-				cout << $<entry>2->str << endl;
+				cout << $<floatVal>2 << endl;
 				$<element>$ = t;
 			}
 			
