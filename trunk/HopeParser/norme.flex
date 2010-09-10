@@ -9,12 +9,20 @@
  */
 %{
 
-#include "normeAntisismiche-parse.h"
+#include "normeantisismiche.tab.hh"
 #include "stringtab.h"
 #include "utilities.h"
 #include "EarthquakeScanner.h"
 #include <stdio.h>
 /* The compiler assumes these identifiers. */
+
+# define	parete 		37
+# define	linea_piano 59
+# define	cordolo 	43
+# define	apertura 	44
+# define	architrave 	65
+# define	float_const 111
+# define	ERROR_CONST 103
 
 /* Max size of string constants */
 #define MAX_STR_CONST 1025
@@ -37,9 +45,7 @@ char *string_buf_ptr;
 
 extern int curr_lineno;
 extern int verbose_flag;
-
 extern YYSTYPE normeAntisismiche_yylval;
-
 int begin = 1;
 int prevstate;
 
@@ -80,7 +86,8 @@ floatingp    {num}"."{num}
 
 
 <PARETE,LINEAPIANO,APERTURA,ARCHITRAVE,CORDOLO>[0-9]+("."[0-9]+)? {
-	normeAntisismiche_yylval.symbol = floattable.add_float(atof(yytext));
+	//normeAntisismiche_yylval.symbol = floattable.add_float(atof(yytext));
+	normeAntisismiche_yylval.symbol = floattable.add_string(yytext,yyleng-1);
 	//yytext[yyleng-1]='\0';
 	//printf("LEEEEEEXEEEEER %s\n", yytext);		
 	return(float_const);

@@ -57,7 +57,6 @@ typedef int flex_int32_t;
 typedef unsigned char flex_uint8_t; 
 typedef unsigned short int flex_uint16_t;
 typedef unsigned int flex_uint32_t;
-#endif /* ! C99 */
 
 /* Limits of integral types. */
 #ifndef INT8_MIN
@@ -88,13 +87,15 @@ typedef unsigned int flex_uint32_t;
 #define UINT32_MAX             (4294967295U)
 #endif
 
+#endif /* ! C99 */
+
 #endif /* ! FLEXINT_H */
 
 /* begin standard C++ headers. */
 #include <iostream> 
 #include <errno.h>
-#include <cstdio>
 #include <cstdlib>
+#include <cstdio>
 #include <cstring>
 /* end standard C++ headers. */
 
@@ -152,7 +153,15 @@ typedef unsigned int flex_uint32_t;
 
 /* Size of default input buffer. */
 #ifndef YY_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k.
+ * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
+ * Ditto for the __ia64__ case accordingly.
+ */
+#define YY_BUF_SIZE 32768
+#else
 #define YY_BUF_SIZE 16384
+#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -497,12 +506,20 @@ static yyconst flex_int16_t yy_chk[180] =
  */
 #line 11 "norme.flex"
 
-#include "normeAntisismiche-parse.h"
+#include "normeantisismiche.tab.hh"
 #include "stringtab.h"
 #include "utilities.h"
 #include "EarthquakeScanner.h"
 #include <stdio.h>
 /* The compiler assumes these identifiers. */
+
+# define	parete 		37
+# define	linea_piano 59
+# define	cordolo 	43
+# define	apertura 	44
+# define	architrave 	65
+# define	float_const 111
+# define	ERROR_CONST 103
 
 /* Max size of string constants */
 #define MAX_STR_CONST 1025
@@ -525,16 +542,14 @@ char *string_buf_ptr;
 
 extern int curr_lineno;
 extern int verbose_flag;
-
 extern YYSTYPE normeAntisismiche_yylval;
-
 int begin = 1;
 int prevstate;
 
 /* altre eventuali inizializzazioni vanno qui*/ 
 
 
-#line 538 "lex.yy.cc"
+#line 553 "lex.yy.cc"
 
 #define INITIAL 0
 #define INTERPIANO 1
@@ -572,7 +587,12 @@ static int yy_flex_strlen (yyconst char * );
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k */
+#define YY_READ_BUF_SIZE 16384
+#else
 #define YY_READ_BUF_SIZE 8192
+#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -642,7 +662,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 55 "norme.flex"
+#line 61 "norme.flex"
 
 
 
@@ -653,7 +673,7 @@ YY_DECL
 
 
 
-#line 657 "lex.yy.cc"
+#line 677 "lex.yy.cc"
 
 	if ( !(yy_init) )
 		{
@@ -738,7 +758,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 65 "norme.flex"
+#line 71 "norme.flex"
 {
 	if(!begin) {
 		printf("L'elemento iniziale deve essere \"struttura\"!!");	
@@ -751,7 +771,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 75 "norme.flex"
+#line 81 "norme.flex"
 {
 	prevstate = INITIAL;
 	BEGIN(PARETE);
@@ -760,9 +780,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 82 "norme.flex"
+#line 88 "norme.flex"
 {
-	normeAntisismiche_yylval.symbol = floattable.add_float(atof(yytext));
+	//normeAntisismiche_yylval.symbol = floattable.add_float(atof(yytext));
+	normeAntisismiche_yylval.symbol = floattable.add_string(yytext,yyleng-1);
 	//yytext[yyleng-1]='\0';
 	//printf("LEEEEEEXEEEEER %s\n", yytext);		
 	return(float_const);
@@ -770,21 +791,21 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 89 "norme.flex"
+#line 96 "norme.flex"
 {
 	
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 93 "norme.flex"
+#line 100 "norme.flex"
 {
 	BEGIN(prevstate);		
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 98 "norme.flex"
+#line 105 "norme.flex"
 {
 	prevstate = INITIAL;
 	BEGIN(INTERPIANO);
@@ -792,7 +813,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 103 "norme.flex"
+#line 110 "norme.flex"
 {
 	prevstate = INTERPIANO;
 	BEGIN(LINEAPIANO);
@@ -801,7 +822,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 109 "norme.flex"
+#line 116 "norme.flex"
 {
 	prevstate = INTERPIANO;
 	BEGIN(CORDOLO);
@@ -810,7 +831,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 115 "norme.flex"
+#line 122 "norme.flex"
 {
 	BEGIN(INITIAL);
 
@@ -818,14 +839,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 120 "norme.flex"
+#line 127 "norme.flex"
 {
 	BEGIN(APERTURE);
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 124 "norme.flex"
+#line 131 "norme.flex"
 {
 	prevstate = APERTURE;
 	BEGIN(APERTURA);
@@ -834,7 +855,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 130 "norme.flex"
+#line 137 "norme.flex"
 {
 	prevstate = APERTURE;
 	BEGIN(ARCHITRAVE);
@@ -843,7 +864,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 136 "norme.flex"
+#line 143 "norme.flex"
 {
 	BEGIN(INITIAL);
 }
@@ -851,14 +872,14 @@ YY_RULE_SETUP
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 140 "norme.flex"
+#line 147 "norme.flex"
 {
 	curr_lineno++;
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 144 "norme.flex"
+#line 151 "norme.flex"
 {
 	printf("Lessema non riconosciuto: %s", yytext);
 	return(ERROR);
@@ -866,10 +887,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 152 "norme.flex"
+#line 159 "norme.flex"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 873 "lex.yy.cc"
+#line 894 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(INTERPIANO):
 case YY_STATE_EOF(APERTURE):
@@ -1777,7 +1798,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 152 "norme.flex"
+#line 159 "norme.flex"
 
 
 
