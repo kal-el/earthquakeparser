@@ -179,7 +179,7 @@ apertura_pr : apertura_tk architrave_tk
 			}
 			
 	
-apertura_tk : APERTURA f_const_ f_const_ f_const_ f_const_
+apertura_tk : APERTURA coord coord coord coord
 			{
 			cout << "APERTURA: " << APERTURA_ << ": " << $<floatVal>2 << " || " << $<floatVal>3 << " || " << $<floatVal>4 << " || " << $<floatVal>5 << "\n\n";
 				token_ * t = (token_ *)malloc(sizeof(token_*));
@@ -196,14 +196,14 @@ apertura_tk : APERTURA f_const_ f_const_ f_const_ f_const_
 					//error(@$, "che palleeee\n");
 					cout << "NOOOOOO\n";
 				}
-			| error f_const_ f_const_ f_const_ f_const_
+			| error coord coord coord coord
 				{
 					//error(@$, "che palleeee\n");
 					cout << "NOOOOOO\n";
 				}
 			
 			
-architrave_tk : ARCHITRAVE f_const_ f_const_ f_const_ f_const_
+architrave_tk : ARCHITRAVE coord coord coord coord
 			{
 			cout << "ARCHITRAVE: " << ARCHITRAVE_ << ": " << $<floatVal>2 << " || " << $<floatVal>3 << " || " << $<floatVal>4 << " || " << $<floatVal>5 << "\n\n";
 			
@@ -223,7 +223,7 @@ architrave_tk : ARCHITRAVE f_const_ f_const_ f_const_ f_const_
 				}
 			
 			
-lineapiano_tk : LINEAPIANO f_const_ f_const_ f_const_ f_const_
+lineapiano_tk : LINEAPIANO coord coord coord coord
 			{
 			cout << "LINEAPIANO: " << ": " << $<floatVal>2 << " || " << $<floatVal>3 << " || " << $<floatVal>4 << " || " << $<floatVal>5 << "\n\n";
 			
@@ -243,7 +243,7 @@ lineapiano_tk : LINEAPIANO f_const_ f_const_ f_const_ f_const_
 				}
 			
 			
-cordolo_tk : CORDOLO f_const_ f_const_ f_const_ f_const_
+cordolo_tk : CORDOLO coord coord coord coord
 			{
 			//cout << "CORDOLO: " << CORDOLO_ << ": " << $<floatVal>2 << " || " << $<floatVal>3 << " || " << $<floatVal>4 << " || " << $<floatVal>5 << "\n\n";
 				token_ * t = (token_ *)malloc(sizeof(token_*));
@@ -264,7 +264,7 @@ cordolo_tk : CORDOLO f_const_ f_const_ f_const_ f_const_
 parete_tk : PARETE coord coord coord coord 
 			{
 				token_ * t = (token_ *)malloc(sizeof(token_*));
-				t->type = $<integerVal>1;
+				t->type = PARETE_;
 				t->x1 = $<floatVal>2;
 				t->x2 = $<floatVal>3;
 				t->y1 = $<floatVal>4;
