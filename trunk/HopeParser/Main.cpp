@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdio.h>
 #include "utilities.h"
+#include "Exceptions.h"
 
 FILE *fin = fopen("fileIntermedio.bd", "r");
 int curr_lineno = 1;

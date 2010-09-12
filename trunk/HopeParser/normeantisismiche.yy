@@ -5,6 +5,7 @@
 #include "Struttura.h"
 #include <stdio.h>
 #include "stringtab.h"
+#include "Exceptions.h"
 
 # define	parete 		37
 # define	linea_piano 59
@@ -128,21 +129,27 @@ struttura : piani aperture
 		/** piani <contains> interpiani **/
 piani : piani interpiani
            {
+           		
            		list<Interpiano> interpianiList = $<floors>1->getInterpiani();
 				interpianiList.push_back(*($<inter>2));
+				
 				$$ = new Piani(interpianiList, $1->getParete());
+				
+				cout << "PIANI - " << $$->getParete()->x1 << endl;
 	       }
 		   
 		| parete_tk
 			{
+				cout << $<element>1 << " XX " << $<element>1->x1 << endl;
 				$$ = new Piani($<element>1);
+				cout << "PIANI 2 - " << $$->getParete() << " -- " << $$->getParete()->x1 << endl;
 			}
 	   
 
 			/** LINEAPIANO <isUnder, Height(0.2,0.4)> CORDOLO **/
 interpiani : lineapiano_tk cordolo_tk
 				{
-				cout << "INTERPIANI_pr1: " << $<element>1->type << " || " << $<element>1->x1 << " || " << $<element>1->y1 << $<element>2->x2 << " || " << $<element>1->y2
+				cout << "INTERPIANI_pr1: " << $<element>1->type << " || " << $<element>1->x1 << " || " << $<element>1->y1 << " || " << $<element>2->x2 << " || " << $<element>1->y2
 					<< "\n-" << $<element>2->type << " || " << $<element>2->x1 << " || " << $<element>2->y1 << $<element>2->x2 << " || " << $<element>2->y2 << "\n\n";
 
 					$<inter>$ = new Interpiano($<element>1, $<element>2);
@@ -230,8 +237,8 @@ lineapiano_tk : LINEAPIANO coord coord coord coord
 				token_ * t = (token_ *)malloc(sizeof(token_*));
 				t->type = LINEA_PIANO_;
 				t->x1 = $<floatVal>2;
-				t->x2 = $<floatVal>3;
-				t->y1 = $<floatVal>4;
+				t->y1 = $<floatVal>3;
+				t->x2 = $<floatVal>4;
 				t->y2 = $<floatVal>5;
 				$<element>$ = t;
 			}
@@ -249,8 +256,8 @@ cordolo_tk : CORDOLO coord coord coord coord
 				token_ * t = (token_ *)malloc(sizeof(token_*));
 				t->type = CORDOLO_;
 				t->x1 = $<floatVal>2;
-				t->x2 = $<floatVal>3;
-				t->y1 = $<floatVal>4;
+				t->y1 = $<floatVal>3;
+				t->x2 = $<floatVal>4;
 				t->y2 = $<floatVal>5;
 				$<element>$ = t;
 			}
@@ -266,10 +273,10 @@ parete_tk : PARETE coord coord coord coord
 				token_ * t = (token_ *)malloc(sizeof(token_*));
 				t->type = PARETE_;
 				t->x1 = $<floatVal>2;
-				t->x2 = $<floatVal>3;
-				t->y1 = $<floatVal>4;
+				t->y1 = $<floatVal>3;
+				t->x2 = $<floatVal>4;
 				t->y2 = $<floatVal>5;
-				//cout << "PARETE " << t->y2 << endl;
+				cout << "PARETE " << t->y2 << endl;
 				$<element>$ = t;				
 			}
 			

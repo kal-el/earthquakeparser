@@ -45,7 +45,7 @@
 
 
 /* Line 162 of location.cc  */
-#line 21 "normeantisismiche.yy"
+#line 22 "normeantisismiche.yy"
 namespace Earthquake {
 
 /* Line 162 of location.cc  */
@@ -160,7 +160,7 @@ namespace Earthquake {
 
 
 /* Line 271 of location.cc  */
-#line 21 "normeantisismiche.yy"
+#line 22 "normeantisismiche.yy"
 } // Earthquake
 
 /* Line 271 of location.cc  */
