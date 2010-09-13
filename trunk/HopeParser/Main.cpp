@@ -14,7 +14,7 @@ Earthquake::BisonParser::semantic_type normeAntisismiche_yylval;
 // Entry Point
 int main(int argc, char * argv[]) {
 
-	Earthquake::Parser parser;
+ 	Earthquake::Parser parser;
 
 	return parser.parse();
 }

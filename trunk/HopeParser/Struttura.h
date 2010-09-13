@@ -4,6 +4,9 @@
 #include "Constants.h"
 #include "Exceptions.h"
 #include <list>
+#include <iostream>
+#include <math.h>
+
 
 using namespace std;
 
@@ -16,7 +19,6 @@ struct token_ {
 	float y1;
 	float y2;
 };
-
 
 /**
 * Class definitions
@@ -103,8 +105,8 @@ public:
 
 
 	~Apertura() {
-		delete apertura;
-		delete architrave;
+		//delete apertura;
+		//delete architrave;
 	}
 
 
@@ -139,7 +141,9 @@ public:
 
 	Aperture(list<Apertura> ap): a(ap){};
 
-	~Aperture(){ delete &a; };
+	~Aperture(){
+		//delete &a;
+	}
 
 	list<Apertura> getList(){
 		return a;
@@ -204,13 +208,13 @@ public:
 
 	//to create the object with only linea_piano
 	Interpiano(token_ *lp) {
-		Interpiano(lp, 0);
+		linea_piano = lp;
 	}
 
 
 	~Interpiano() {
-		delete linea_piano;
-		delete cordolo;
+		//delete linea_piano;
+		//delete cordolo;
 	}
 
 
@@ -218,7 +222,7 @@ public:
 		return linea_piano;
 	}
 
-	token_ *getCorridoio() {
+	token_ *getCordolo() {
 		return cordolo;
 	}
 
@@ -255,7 +259,7 @@ public:
 	* this method checks if the condition of the objects "interpiani" and "parete"
 	* are respected
 	* Property to check: 
-	*		PIANI�  <contains> INTERPIANI
+	*		PIANI  <contains> INTERPIANI
 	*		parete (if interpiani is empty)
 	* @throws PropertyViolationException if the properties aren't satisfied
 	**/
@@ -273,9 +277,10 @@ public:
 		for(list<Interpiano>::const_iterator it = interpiani.begin(); it != interpiani.end(); ++it) {
 
 			float x1 = it->linea_piano->x1;
-			if(it->cordolo && x1 > it->cordolo->x1)
-				x1 = it->cordolo->x1;
+			if(it->cordolo && x1 > it->cordolo->x1){
 
+				x1 = it->cordolo->x1;
+			}
 			float x2 = it->linea_piano->x2;
 			if(it->cordolo && x2 < it->cordolo->x2)
 				x2 = it->cordolo->x2;
@@ -287,7 +292,7 @@ public:
 			float y2 = it->linea_piano->y2;
 			if(it->cordolo && y2 < it->cordolo->y2)
 				y2 = it->cordolo->y2;
-
+			cout << "VIVA GUNTHER!!!! " << parete << endl ;
 			if(parete->x1 > x1 || parete->x2 < x2 || parete->y1 > y1 || parete->y2 < y2)
 				throw new PropertyViolationException(string("Interpiano not contained in Parete"));
 		}
@@ -295,24 +300,23 @@ public:
 	}
 
 
-	Piani(list<Interpiano> i, token_ *p=0) throw(IllegalArgumentException, PropertyViolationException) : interpiani(i) {
+	Piani(list<Interpiano> &i, token_ *p=0) throw(IllegalArgumentException, PropertyViolationException) : interpiani(i) {
 		if(p && p->type != PARETE_)
 			throw new IllegalArgumentException(string("wrong token type"));
-		
-		checkProperties();
-
 		parete = p;
+		checkProperties();
+		std::cout << "hippie hai hoohoo " << std::endl;
 	}
 
 	//to create the object without the interpiano list
 	Piani(token_ *p) {
 		list<Interpiano> l;
-		Piani(l, p);
+		interpiani = l;
+		parete = p;
 	}
 
 	~Piani() {
-		interpiani.~list();
-		delete parete;
+		// TODO
 	}
 
 	token_ *getParete() {
@@ -391,8 +395,8 @@ public:
 	}
 
 	~Struttura() {
-		p.~Piani();
-		a.~list();
+		//p.~Piani();
+		//a.~list();
 	}
 
 

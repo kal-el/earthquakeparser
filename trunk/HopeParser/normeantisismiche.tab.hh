@@ -39,7 +39,7 @@
 /* "%code requires" blocks.  */
 
 /* Line 35 of lalr1.cc  */
-#line 26 "normeantisismiche.yy"
+#line 27 "normeantisismiche.yy"
 
 	// Forward-declare the Scanner class; the Parser needs to be assigned a 
 	// Scanner, but the Scanner can't be declared without the Parser
@@ -67,7 +67,7 @@
 
 
 /* Line 35 of lalr1.cc  */
-#line 21 "normeantisismiche.yy"
+#line 22 "normeantisismiche.yy"
 namespace Earthquake {
 
 /* Line 35 of lalr1.cc  */
@@ -76,7 +76,7 @@ namespace Earthquake {
   class location;
 
 /* Line 35 of lalr1.cc  */
-#line 21 "normeantisismiche.yy"
+#line 22 "normeantisismiche.yy"
 } // Earthquake
 
 /* Line 35 of lalr1.cc  */
@@ -123,7 +123,7 @@ do {							\
 
 
 /* Line 35 of lalr1.cc  */
-#line 21 "normeantisismiche.yy"
+#line 22 "normeantisismiche.yy"
 namespace Earthquake {
 
 /* Line 35 of lalr1.cc  */
@@ -139,7 +139,7 @@ namespace Earthquake {
     {
 
 /* Line 35 of lalr1.cc  */
-#line 51 "normeantisismiche.yy"
+#line 52 "normeantisismiche.yy"
 
     int  				integerVal;
     std::string			*stringVal;
@@ -271,10 +271,10 @@ namespace Earthquake {
     /// - if positive, shift that token.
     /// - if negative, reduce the rule which number is the opposite.
     /// - if zero, do what YYDEFACT says.
-    static const signed char yytable_[];
+    static const unsigned char yytable_[];
     static const signed char yytable_ninf_;
 
-    static const signed char yycheck_[];
+    static const unsigned char yycheck_[];
 
     /// For a state, its accessing symbol.
     static const unsigned char yystos_[];
@@ -349,7 +349,7 @@ namespace Earthquake {
   };
 
 /* Line 35 of lalr1.cc  */
-#line 21 "normeantisismiche.yy"
+#line 22 "normeantisismiche.yy"
 } // Earthquake
 
 /* Line 35 of lalr1.cc  */
