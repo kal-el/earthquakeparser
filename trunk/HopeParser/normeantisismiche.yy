@@ -43,7 +43,7 @@
 %code {
 	// Prototype for the yylex function
 	static int yylex(Earthquake::BisonParser::semantic_type * yylval, Earthquake::FlexScanner &scanner);
-	#define ROUND(x) floorf(((x)*100.0)+0.5)/100
+	#define ROUND(x) floorf(((x)*10.0)+0.5)/10.0
 }
 
  /*** BEGIN EXAMPLE - Change the example grammar's tokens below ***/
@@ -115,6 +115,9 @@ extern Earthquake::BisonParser::semantic_type normeAntisismiche_yylval;
 struttura : piani aperture
            {
            //Struttura's contructor checks the <contains, not intersect> property
+           
+           cout << "STRUTTURAAAAAA" << endl;
+           
 	       $$ = new Struttura(*($1), ($<openings>2)->getList());
 		   list<token_*> maschi = $$->calcolaMaschi();
 		   try{
@@ -167,7 +170,9 @@ interpiani : lineapiano_tk cordolo_tk
 			/** aperture <not intersect> apertura **/
 aperture	: aperture apertura_pr
 				{
-				cout << "APERTURA_pr1: " << $<element>2->type << " || " << $<element>2->x1 << " || " << $<element>2->y1 << $<element>2->x2 << " || " << $<element>2->y2 <<"\n\n";
+				cout << "APERTURE_PR_1: " << $<open>2->getApertura()->x1 << " || " << 
+				$<open>2->getApertura()->y1 << " || " << $<open>2->getApertura()->x2 << " || " <<
+				 $<open>2->getApertura()->y2 << endl;
 				
 					($<openings>1)->getList().push_back(*($<open>2));
 					$<openings>$ = $<openings>1;
@@ -176,6 +181,7 @@ aperture	: aperture apertura_pr
 				{
 					list<Apertura> apertureList;
 					apertureList.push_back(*($<open>1));
+					cout << "APERTURE_PR_2: " << apertureList.size() << endl;
 					$<openings>$ = new Aperture(apertureList);
 				}
 
@@ -198,10 +204,10 @@ apertura_tk : APERTURA coord coord coord coord
 			cout << "APERTURA: " << APERTURA_ << ": " << $<floatVal>2 << " || " << $<floatVal>3 << " || " << $<floatVal>4 << " || " << $<floatVal>5 << "\n\n";
 				token_ * t = (token_ *)malloc(sizeof(token_*));
 				t->type = APERTURA_;
-				t->x1 = ROUND($<floatVal>2);
-				t->y1 = ROUND($<floatVal>3);
-				t->x2 = ROUND($<floatVal>4);
-				t->y2 = ROUND($<floatVal>5);
+				t->x1 = $<floatVal>2;
+				t->y1 = $<floatVal>3;
+				t->x2 = $<floatVal>4;
+				t->y2 = $<floatVal>5;
 				$<element>$ = t;
 			}
 			
@@ -217,10 +223,10 @@ architrave_tk : ARCHITRAVE coord coord coord coord
 			
 				token_ * t = (token_ *)malloc(sizeof(token_*));
 				t->type = ARCHITRAVE_;
-				t->x1 = ROUND($<floatVal>2);
-				t->y1 = ROUND($<floatVal>3);
-				t->x2 = ROUND($<floatVal>4);
-				t->y2 = ROUND($<floatVal>5);
+				t->x1 = $<floatVal>2;
+				t->y1 = $<floatVal>3;
+				t->x2 = $<floatVal>4;
+				t->y2 = $<floatVal>5;
 				$<element>$ = t;
 				cout << "ARCHITRAVE: " << ARCHITRAVE_ << ": " << $<floatVal>2 
 				<< " || " << $<floatVal>3 << " || " << $<floatVal>4 << " || " 
@@ -240,10 +246,10 @@ lineapiano_tk : LINEAPIANO coord coord coord coord
 			
 				token_ * t = (token_ *)malloc(sizeof(token_*));
 				t->type = LINEA_PIANO_;
-				t->x1 = ROUND($<floatVal>2);
-				t->y1 = ROUND($<floatVal>3);
-				t->x2 = ROUND($<floatVal>4);
-				t->y2 = ROUND($<floatVal>5);
+				t->x1 = $<floatVal>2;
+				t->y1 = $<floatVal>3;
+				t->x2 = $<floatVal>4;
+				t->y2 = $<floatVal>5;
 				$<element>$ = t;
 			}
 			
@@ -261,10 +267,10 @@ cordolo_tk : CORDOLO coord coord coord coord
 				" || " << $<floatVal>4 << " || " << $<floatVal>5 << "\n\n";
 				token_ * t = (token_ *)malloc(sizeof(token_*));
 				t->type = CORDOLO_;
-				t->x1 = ROUND($<floatVal>2);
-				t->y1 = ROUND($<floatVal>3);
-				t->x2 = ROUND($<floatVal>4);
-				t->y2 = ROUND($<floatVal>5);
+				t->x1 = $<floatVal>2;
+				t->y1 = $<floatVal>3;
+				t->x2 = $<floatVal>4;
+				t->y2 = $<floatVal>5;
 				$<element>$ = t;
 			}
 			
@@ -278,19 +284,18 @@ parete_tk : PARETE coord coord coord coord
 			{
 				token_ * t = (token_ *)malloc(sizeof(token_*));
 				t->type = PARETE_;
-				t->x1 = ROUND($<floatVal>2);
-				t->y1 = ROUND($<floatVal>3);
-				t->x2 = ROUND($<floatVal>4);
-				t->y2 = ROUND($<floatVal>5);
+				t->x1 = $<floatVal>2;
+				t->y1 = $<floatVal>3;
+				t->x2 = $<floatVal>4;
+				t->y2 = $<floatVal>5;
 				cout << "PARETE " << t->y2 << endl;
-				$<element>$ = t;
-				cout << "round: " << ROUND(4.79823431) << endl;			
+				$<element>$ = t;		
 			}
 			
 			
 coord	: f_const_ 
 			{
-				$<floatVal>$ = normeAntisismiche_yylval.floatVal;
+				$<floatVal>$ = ROUND(normeAntisismiche_yylval.floatVal);
 				//cout << "FCONST " << $<floatVal>$ << endl;
 			}
 
